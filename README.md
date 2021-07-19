@@ -1,2 +1,2 @@
 # SWEN225-Assignment-1
-Assignment 1 SWEN261
+Assignment 1 SWEN225
