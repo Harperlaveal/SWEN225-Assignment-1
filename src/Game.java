@@ -11,6 +11,7 @@ public class Game{
 	public static List<Character> players = new ArrayList<Character>() ;
 	public static List<Weapon> weapons = new ArrayList<Weapon>() ;
 	public static List<Estate> estates = new ArrayList<Estate>() ;
+	Scanner sc;
 
   //------------------------
   // CONSTRUCTOR
@@ -35,8 +36,8 @@ public class Game{
   public void StartGame() {
 	  int num;
 	  do {
-	  Scanner sc = new Scanner(System.in);
-	  System.out.println("How many players 1-4");
+	  sc = new Scanner(System.in);
+	  System.out.println("How many players 1-4:");
 	  num = sc.nextInt();
 	  } while (!isValid(num));
   }
@@ -50,6 +51,7 @@ public class Game{
 		  System.out.println("Too few players");
 		  return false;
 	  }
+	  sc.close();
 	  return true;
   }
 
