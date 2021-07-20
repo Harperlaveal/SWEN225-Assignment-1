@@ -1,4 +1,4 @@
-public class Estate{
+public class Estate implements Card{
 
   //------------------------
   // MEMBER VARIABLES
@@ -43,10 +43,7 @@ public class Estate{
     return weapon;
   }
 
-  public void delete(){}
-
-
   public String toString(){
-    return getName() + " = " + getWeapon();
+    return getName();
   }
 }
