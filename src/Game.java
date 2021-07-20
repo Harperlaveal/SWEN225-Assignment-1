@@ -8,9 +8,12 @@ public class Game{
   //------------------------
   // MEMBER VARIABLES
   //------------------------
-	public static List<Character> players = new ArrayList<Character>() ;
-	public static List<Weapon> weapons = new ArrayList<Weapon>() ;
-	public static List<Estate> estates = new ArrayList<Estate>() ;
+	//List of collections containing cards and players
+	public static List<Player> players = new ArrayList<Player>();
+	public static List<Character> characters = new ArrayList<Character>();
+	public static List<Weapon> weapons = new ArrayList<Weapon>();
+	public static List<Estate> estates = new ArrayList<Estate>();
+	public static Guess finalGuess = new Guess(null, null, null);
 	Scanner sc;
 
   //------------------------
@@ -18,23 +21,26 @@ public class Game{
   //------------------------
 
   public Game(){
-	  Character lucilla = new Character("Lucilla");
-	  Character bert = new Character("Bert");
-	  Character maline = new Character("Maline");
-	  Character percy = new Character("Percy");
-	  addPlayers(lucilla, bert, maline, percy);
-	  Weapon broom = new Weapon("Broom");
-	  Weapon scissors = new Weapon("Scissors");
-	  Weapon knife = new Weapon("Knife");
-	  Weapon shovel = new Weapon("Shovel");
-	  Weapon ipad = new Weapon("iPad");
-	  addWeapons(broom, scissors, knife, shovel, ipad);
+	  setCharacters();
 	  setWeapons();
+	  setEstateWeapons();
 	  StartGame();
+	  chooseMurderer();
+	  dealCards();
   }
   
+  /**
+   * 
+   * Initialises players and starts the game
+   * 
+   */
   public void StartGame() {
 	  int num;
+	  Player player1 = new Player("Lucilla");
+	  Player player2 = new Player("Bert");
+	  Player player3 = new Player("Maline");
+	  Player player4 = new Player("Percy");
+	  addPlayers(player1, player2, player3, player4);
 	  do {
 	  sc = new Scanner(System.in);
 	  System.out.println("How many players 1-4:");
@@ -42,6 +48,22 @@ public class Game{
 	  } while (!isValid(num));
   }
   
+  public void addPlayers(Player player1, Player player2, Player player3, Player player4) {
+	players.add(player1);
+	players.add(player2);
+	players.add(player3);
+	players.add(player4);
+  }
+  
+  /**
+   * 
+   * Checks for valid number of players in game 
+   * 
+   * @param num
+   * number of players given from input
+   * @return
+   * True or false depending on if valid number is given
+   */
   public boolean isValid(int num) {
 	  if (num > 4) {
 		  System.out.println("Too many players");
@@ -58,45 +80,95 @@ public class Game{
   //------------------------
   // INTERFACE
   //------------------------
-  public void addPlayers(Character c1, Character c2, Character c3, Character c4) {
-	  players.add(c1);
-	  players.add(c2);
-	  players.add(c3);
-	  players.add(c4);
+  
+  /**
+   * Sets up all estate cards
+   * 
+   */
+  public void setEstateWeapons() {
+	  Collections.shuffle(weapons); // mixes weapons up
+	  estates.add(new Estate("Haunted House", weapons.get(0)));
+	  estates.add(new Estate("Manic Manor", weapons.get(1)));
+	  estates.add(new Estate("Villa Celia", weapons.get(2)));
+	  estates.add(new Estate("Calamity Castle", weapons.get(3)));
+	  estates.add(new Estate("Peril Palace", weapons.get(4)));
   }
   
-  public void addWeapons(Weapon w1, Weapon w2, Weapon w3, Weapon w4, Weapon w5) {
-	  weapons.add(w1);
-	  weapons.add(w2);
-	  weapons.add(w3);
-	  weapons.add(w4);
-	  weapons.add(w5);
+  /**
+   * Sets up all character cards
+   * 
+   * 
+   */
+  public void setCharacters() {
+	  characters.add(new Character("Lucilla"));
+	  characters.add(new Character("Bert"));
+	  characters.add(new Character("Maline"));
+	  characters.add(new Character("Percy"));
   }
   
-  public void addEstates(Estate e1, Estate e2, Estate e3, Estate e4, Estate e5) {
-	  estates.add(e1);
-	  estates.add(e2);
-	  estates.add(e3);
-	  estates.add(e4);
-	  estates.add(e5);
-  }
-  
+  /**
+   * Sets up all weapon cards
+   * 
+   */
   public void setWeapons() {
-	  Collections.shuffle(weapons);
-	  Estate hauntedHouse = new Estate("Haunted House", weapons.get(0));
-	  Estate manicManor = new Estate("Manic Manor", weapons.get(1));
-	  Estate villaCelia = new Estate("Villa Celia", weapons.get(2));
-	  Estate calamityCastle = new Estate("Calamity Castle", weapons.get(3));
-	  Estate perilPalace = new Estate("Peril Palace", weapons.get(4));
-	  addEstates(hauntedHouse, manicManor, villaCelia, calamityCastle, perilPalace);
+	  weapons.add(new Weapon("Broom"));
+	  weapons.add(new Weapon("Scissors"));
+	  weapons.add(new Weapon("Knife"));
+	  weapons.add(new Weapon("Shovel"));
+	  weapons.add(new Weapon("iPad"));
   }
   
-  public void delete(){}
+  /**
+   * Chooses the murderer randomly
+   * 
+   */
+  public void chooseMurderer() {
+	  //shuffles all of the collections 
+	  Collections.shuffle(characters);
+	  Collections.shuffle(weapons);
+	  Collections.shuffle(estates);
+	  //creates guess object and stores murderer
+	  Guess guess = new Guess(characters.remove(0), weapons.remove(0), estates.remove(0));
+	  finalGuess.setMurderer(guess);
+	  
+  }
+  
+  /**
+   * Deals out the remainder of cards to all of the players
+   * 
+   */
+  public void dealCards() {
+	  List<Card> allCards = new ArrayList<Card>();
+	  ArrayList<Card> hand;
+	  allCards.addAll(characters);
+	  allCards.addAll(weapons);
+	  allCards.addAll(estates);
+	  Collections.shuffle(allCards);
+	  int hSize = allCards.size()/players.size(); // gets the average amount of cards for each hand
+	  for (Player c : players) {
+		  hand = new ArrayList<Card>();
+		  for (int i = 0; i < hSize; i++) {
+			  hand.add(allCards.remove(i)); // adds card to player hand then removes it 
+		  }
+		  c.addToHand(hand); // add current hand to hand collection in player class for storage 
+	  }
+	  while (!allCards.isEmpty()) { // while the remainder of cards are not empty divide them up amongst the players 
+		  for (Player c : players) {
+			  for (int i = 0; i < 1; i++) {
+				  if(allCards.isEmpty()) { // break out of loop if there are no more cards to hand out
+					  break;
+				  }
+				  c.getHand().add(allCards.remove(i));
+			  }
+		  }
+	  } 
+  }
   
   public static void main(String[] args) {
 	  new Game();
-	  System.out.println(players.toString());
-	  System.out.println(weapons.toString());
-	  System.out.println(estates.toString());
+	  System.out.println("Murderer" + " = " + finalGuess.getMurderer().toString());
+	  for (Player c : players) {
+		  System.out.println(c.getName() + " = Hand" + c.getHand());
+	  }
   }
 }
