@@ -27,6 +27,7 @@ public class Game{
 	  StartGame();
 	  chooseMurderer();
 	  dealCards();
+	  chooseFirst();
   }
   
   /**
@@ -130,8 +131,17 @@ public class Game{
 	  //creates guess object and stores murderer
 	  Guess guess = new Guess(characters.remove(0), weapons.remove(0), estates.remove(0));
 	  finalGuess.setMurderer(guess);
-	  
+
   }
+
+  public Character chooseFirst() {
+	  //shuffles all of the collections
+	  Collections.shuffle(characters);
+	  String first = characters.get(0).getName();
+
+	  System.out.println("First player is: " + first);
+	  return characters.remove(0);
+	}
   
   /**
    * Deals out the remainder of cards to all of the players
@@ -154,6 +164,7 @@ public class Game{
 	  }
 	  while (!allCards.isEmpty()) { // while the remainder of cards are not empty divide them up amongst the players 
 		  for (Player c : players) {
+
 			  for (int i = 0; i < 1; i++) {
 				  if(allCards.isEmpty()) { // break out of loop if there are no more cards to hand out
 					  break;
@@ -161,7 +172,16 @@ public class Game{
 				  c.getHand().add(allCards.remove(i));
 			  }
 		  }
-	  } 
+	  }
+
+	  System.out.println(diceRoll());
+  }
+
+  public int diceRoll() {
+	  int diceA = 1 + (int)	(Math.random() * 7);
+	  int diceB = 1 + (int) Math.random() * 7;
+	  int finalDice = diceA + diceB;
+	  return finalDice;
   }
   
   public static void main(String[] args) {
@@ -170,5 +190,6 @@ public class Game{
 	  for (Player c : players) {
 		  System.out.println(c.getName() + " = Hand" + c.getHand());
 	  }
+
   }
 }
