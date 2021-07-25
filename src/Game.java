@@ -434,6 +434,12 @@ public class Game{
 	  orderedEstates.add(villa_celia);
 	  orderedEstates.add(calamity_castle);
 	  orderedEstates.add(peril_palace);
+	  Board.allEstates.add(haunted_house);
+	  Board.allEstates.add(manic_manor);
+	  Board.allEstates.add(villa_celia);
+	  Board.allEstates.add(calamity_castle);
+	  Board.allEstates.add(peril_palace);
+	  
   }
   
   /**
