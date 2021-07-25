@@ -10,6 +10,12 @@ public class Player {
 		name = aName;
 	}
 	
+	/**
+	 * get players hand directly from player
+	 * 
+	 * @param c
+	 * the list of cards the player has been assigned 
+	 */
 	public void addToHand(List<Card> c) {
 		for (Card card : c) {
 			hand.add(card);
@@ -24,4 +30,23 @@ public class Player {
 		return hand;
 	}
 	
+	/**
+	 * Custom equals method
+	 * 
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj.getClass() != this.getClass()) {
+			return false;
+		}
+		Player player = (Player) obj;
+		return name == player.name;
+	}
+	
+	public String toString() {
+		return getName();
+	}
 }
