@@ -7,6 +7,7 @@ public class Board{
   // MEMBER VARIABLES
   //------------------------
   public Cell[][] cells = new Cell[24][24];
+  public static List<Estate> allEstates = new ArrayList<Estate>();
 
   //------------------------
   // CONSTRUCTOR
@@ -25,33 +26,28 @@ public class Board{
   public void delete(){}
 
   public void setEstates() {
-    Estate hauntedHouse;
-    Estate manicManor;
-    Estate villaCelia;
-    Estate calamityCastle;
-    Estate perilPalace;
       for(int i = 0; i < 5; i++) { // nested for loop to set an estate to all the cells that need it
         for(int j = 0; j < 5; j++) {
           Cell cell;
           cell = cells[2 + i][2 + j];
           cell.setEmpty(false);
-          cell.setEstate(hauntedHouse);
+          cell.setEstate(allEstates.get(0));
 
           cell = cells[2 + i][17 + j];
           cell.setEmpty(false);
-          cell.setEstate(manicManor);
+          cell.setEstate(allEstates.get(1));
 
           cell = cells[9 + i][10 + j];
           cell.setEmpty(false);
-          cell.setEstate(villaCelia);
+          cell.setEstate(allEstates.get(2));
 
           cell = cells[17 + i][2 + j];
           cell.setEmpty(false);
-          cell.setEstate(calamityCastle);
+          cell.setEstate(allEstates.get(3));
 
           cell = cells[17 + i][17 + j];
           cell.setEmpty(false);
-          cell.setEstate(perilPalace);
+          cell.setEstate(allEstates.get(4));
         }
     }
   }
