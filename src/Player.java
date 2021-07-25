@@ -46,6 +46,7 @@ public class Player {
 		return name == player.name;
 	}
 	
+	
 	public String toString() {
 		return getName();
 	}
