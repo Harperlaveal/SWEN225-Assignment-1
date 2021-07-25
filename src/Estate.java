@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Estate implements Card{
 
   //------------------------
@@ -7,6 +9,7 @@ public class Estate implements Card{
   //Estate Attributes
   private String name;
   private Weapon weapon;
+  private List<Estate> estates;
 
   //------------------------
   // CONSTRUCTOR
@@ -15,6 +18,10 @@ public class Estate implements Card{
   public Estate(String aName, Weapon aWeapon){
     name = aName;
     weapon = aWeapon;
+  }
+  
+  public Estate(String aName) {
+	  name = aName;
   }
 
   //------------------------
@@ -33,6 +40,10 @@ public class Estate implements Card{
     weapon = aWeapon;
     wasSet = true;
     return wasSet;
+  }
+  
+  public void setEstate(Estate e) {
+	  estates.add(e);
   }
 
   public String getName(){
