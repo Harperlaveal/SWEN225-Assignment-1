@@ -14,6 +14,7 @@ public class Game{
 	public static List<Weapon> weapons = new ArrayList<Weapon>();
 	public static List<Estate> estates = new ArrayList<Estate>();
 	
+	public static List<Player> orderedPlayers = new ArrayList<Player>();
 	public static List<Character> orderedCharacters = new ArrayList<Character>();
 	public static List<Weapon> orderedWeapons = new ArrayList<Weapon>();
 	public static List<Estate> orderedEstates = new ArrayList<Estate>();
@@ -70,6 +71,10 @@ public class Game{
 	players.add(player2);
 	players.add(player3);
 	players.add(player4);
+	orderedPlayers.add(player1);
+	orderedPlayers.add(player2);
+	orderedPlayers.add(player3);
+	orderedPlayers.add(player4);
   }
   
   /**
@@ -122,6 +127,7 @@ public class Game{
   public void gameOver() {
 	  if (players.isEmpty()) { // checks if no players are left in the game
 		  System.out.println("Game Over no body wins");
+		  sc.close();
 		  System.exit(0);
 	  }
   }
@@ -163,7 +169,7 @@ public class Game{
 			  System.out.println("Type 'guess' to make a guess using the estate you are in, 'finalguess' to make a final guess or 'end' to end turn");
 			  String string = sc.next();
 			  if(string.equals("guess")) { 
-				  makeGuess(); 
+				  makeGuess(player); 
 				  valid = false; // acknowledges valid input
 			  }
 			  else if(string.equals("finalguess")) { 
@@ -202,7 +208,7 @@ public class Game{
    * 
    * 
    */
-  public void makeGuess() {
+  public void makeGuess(Player player) {
 	  boolean chooseChar = true;
 	  boolean chooseWeapon = true;
 	  System.out.println("Characters: 1-Lucilla, 2-Bert, 3-Maline, 4-Percy");
@@ -251,8 +257,63 @@ public class Game{
 		  }
 	  }
 	  System.out.println("Your guess is " + character.toString() + ", " + weapon.toString() + ", [Estate]");
-	  index = (index + 1) % players.size();
-	  start();
+	  refute(player);
+  }
+  
+  /**
+   * Gives players ability to refute guess
+   * 
+   * @param player
+   * current player
+   */
+  public void refute(Player player) {
+	  boolean next = true;
+	  boolean done = true;
+	  int cycle = 0;
+	  int i = 1;
+	  int point = orderedPlayers.indexOf(player); // gets index of current player in list
+	  if(point == 3) { // makes sure all the values are in bound of the list
+		  point = 0;
+		  i = 0;
+	  }
+	  while(done) {
+		  next = true;
+		  if(point + i == 4) { // makes sure all the values are in bound of the list
+			  i = 0;
+			  point = 0;
+		  }
+		  Player currentPlayer = orderedPlayers.get(point+i); // gets player after current player
+		  System.out.println("Pass the game over to " + currentPlayer + " type 'hand' to check hand");
+		  String string = sc.next();
+		  if(string.equals("hand")) {
+			  while(next) {
+				  System.out.println(currentPlayer.toString() + "'s Hand" + currentPlayer.getHand()); // displays players hand
+				  System.out.println("Say the card which you want to refute with then type 'end' otherwise if you cant refute type 'next' to go to next player if there is one");
+				  String refute = sc.next();
+				  if(refute.equals("end")) { // end refution goes to next players turn
+					  index = (index + 1) % players.size();
+					  start();
+					  next = false;
+					  done = false;
+				  } else if (refute.equals("next")) {
+					  cycle++; // keeps track of how many players we have been througj
+					  i++;
+					  if(cycle == orderedPlayers.size()-1) { // if we have asked all 3 players if they can refute end turn go to next player
+						  System.out.println("No one was able to refute the guess");
+						  index = (index + 1) % players.size();
+						  start();
+						  next = false;
+						  done = false;
+					  }
+					  next = false;
+				  } else {
+					  System.out.println("Invalid Input");
+				  }
+			  }
+		  } else {
+			  System.out.println("Invalid Input");
+		  }
+	  }
   }
   
   /**
@@ -316,7 +377,7 @@ public class Game{
 		  System.out.println("Type the corresponding number next to the estate you think the murder took place");
 		  int e = sc.nextInt();
 		  if (e == 1) {
-			  estate = orderedEstates.get(0); // gets estate from list which user has choosen
+			  estate = orderedEstates.get(0); // gets estate from list which user has chosen
 			  chooseEstate = false;
 		  } else if (e == 2) {
 			  estate = orderedEstates.get(1);
@@ -337,6 +398,7 @@ public class Game{
 	  System.out.println("Your guess is " + character.toString() + ", " + weapon.toString() + ", " + estate.toString());
 	  if(character.equals(finalGuess.character) && weapon.equals(finalGuess.weapon) && estate.equals(finalGuess.estate)) { // checks to see if user guessed correctly
 		  System.out.println("That is correct " + player.toString() + " won the game");
+		  sc.close();
 	  } else {
 		  // if incorrect user is removed from the game, game then checks if game over status is met
 		  System.out.println("That is incorrect " + player.toString() + " is out of the game");
@@ -458,8 +520,6 @@ public class Game{
 			  }
 		  }
 	  }
-
-	  //System.out.println(diceRoll());
   }
   
   /**
