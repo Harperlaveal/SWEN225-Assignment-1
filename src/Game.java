@@ -108,6 +108,7 @@ public class Game{
 	  System.out.println("\n");
 	  System.out.println("\n");
 	  System.out.println("\n");
+	  System.out.println("\n");
 	  Player player = players.get(index); // gets player at start of list for first turn
 	  System.out.println("It is " + player.toString() + "'s turn");
 	  System.out.println("Type 'ready' to begin turn");
@@ -166,13 +167,13 @@ public class Game{
 	  boolean inEstate = true;
 	  while(valid) { // makes sure player gives valid input
 		  if (inEstate) { // checks to see if player is currently inside an estate
-			  System.out.println("Type 'guess' to make a guess using the estate you are in, 'finalguess' to make a final guess or 'end' to end turn");
+			  System.out.println("Type 'guess' to make a guess using the estate you are in, 'solve' to make a final solve attempt or 'end' to end turn");
 			  String string = sc.next();
 			  if(string.equals("guess")) { 
 				  makeGuess(player); 
 				  valid = false; // acknowledges valid input
 			  }
-			  else if(string.equals("finalguess")) { 
+			  else if(string.equals("solve")) { 
 				  makeFinalGuess(player); 
 				  valid = false;
 			  }
@@ -185,9 +186,9 @@ public class Game{
 				  System.out.println("Invalid Input"); 
 			  }
 		  } else { // if player is not in an estate
-			  System.out.println("Type 'finalguess' to make a final guess or 'end' to end turn");
+			  System.out.println("Type 'solve' to make a final solve attempt or 'end' to end turn");
 			  String string = sc.next();
-			  if(string.equals("finalguess")) { 
+			  if(string.equals("solve")) { 
 				  makeFinalGuess(player); 
 				  valid = false;
 			  }
