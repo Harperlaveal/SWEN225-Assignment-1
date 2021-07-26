@@ -5,6 +5,10 @@ public class Player {
 	
 	private String name;
 	List<Card> hand = new ArrayList<Card>();
+	private int xPos = 0;
+	private int yPos = 0;
+	private Estate estate = null;
+	private boolean inEstate = false;
 	
 	public Player(String aName){
 		name = aName;
@@ -30,6 +34,35 @@ public class Player {
 		return hand;
 	}
 	
+	public int getXPos() {
+		return xPos;
+	}
+	
+	public int getYPos() {
+		return yPos;
+	}
+	
+	public void setPos(int x, int y) {
+		this.xPos = x;
+		this.yPos = y;
+	}
+	
+	public Estate getEstate() {
+		return estate;
+	}
+	
+	public void setEstate(Estate estate) {
+		this.estate = estate;
+	}
+	
+	public boolean inEstate() {
+		return inEstate;
+	}
+	
+	public void setInEstate(boolean bool) {
+		inEstate = bool;
+	}
+	
 	/**
 	 * Custom equals method
 	 * 
@@ -45,7 +78,6 @@ public class Player {
 		Player player = (Player) obj;
 		return name == player.name;
 	}
-	
 	
 	public String toString() {
 		return getName();
