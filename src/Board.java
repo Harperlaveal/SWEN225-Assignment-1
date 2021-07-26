@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Board{
 
   //------------------------
@@ -11,7 +8,7 @@ public class Board{
   //------------------------
   // CONSTRUCTOR
   //------------------------
-
+  
   public Board(){
     for(int i = 0; i < 24; i++) {
       for(int j = 0; j < 24; j++) {
@@ -21,8 +18,6 @@ public class Board{
     }
   }
 
-
-  public void delete(){}
 
   /**
    * Set all the cells that need estates
@@ -37,7 +32,7 @@ public class Board{
       for(int j = 0; j < 5; j++) {
         Cell cell;
         cell = cells[2 + i][2 + j];
-        cell.setEmpty(false);
+        cell.setEmpty(false); // sets cell to have something in it
         cell.setEstate(hauntedHouse);
 
         cell = cells[2 + i][17 + j];
@@ -58,20 +53,112 @@ public class Board{
       }
     }
   }
+  
+  /**
+   * Sets players onto the board
+   * 
+   */
+  public void setPlayers() {
+	  Player lucilla = Game.getPlayer("Lucilla");
+	  Player bert = Game.getPlayer("Bert");
+	  Player maline = Game.getPlayer("Maline");
+	  Player percy = Game.getPlayer("Percy");
+	  Cell cell;
+	  cell = cells[1][12]; 
+	  lucilla.setPos(1, 12); // sets player at those co-ordinates
+	  cell.setEmpty(false);
+	  cell.setPlayer(lucilla); // places player in that cell
+	  
+	  cell = cells[10][1];
+	  bert.setPos(10, 1);
+	  cell.setEmpty(false);
+	  cell.setPlayer(bert);
+	  
+	  cell = cells[22][10];
+	  maline.setPos(22, 10);
+	  cell.setEmpty(false);
+	  cell.setPlayer(maline);
+	  
+	  cell = cells[10][22];
+	  percy.setPos(10, 22);
+	  cell.setEmpty(false);
+	  cell.setPlayer(percy);
+  }
+  
+  /**
+   * Moves a player on the board
+   */
+  public void movePlayer(Player player, String direction) {
+	  // x and y position of player
+	  int x = player.getXPos();
+	  int y = player.getYPos();
+	  cells[x][y].setPlayer(null);
+	  if(cells[x][y].getEstate() == null) {
+		  cells[x][y].setEmpty(true);
+	  }
+	  if(direction.equals("up")) { 
+		  Cell newCell = cells[x-1][y]; // sets cell at next position
+		  player.setEstate(newCell.getEstate()); //sets player at estate if player is on an estate
+		  cells[x-1][y].setPlayer(player); // sets player at next cell
+		  cells[x-1][y].setEmpty(false); // cells cell as not empty
+		  player.setPos(x-1, y); // updates players co-ordinates on board
+	  }else if(direction.equals("down")) {
+		  Cell newCell = cells[x+1][y];
+		  player.setEstate(newCell.getEstate());
+		  cells[x+1][y].setPlayer(player);
+		  cells[x+1][y].setEmpty(false);
+		  player.setPos(x+1, y);
+	  }else if(direction.equals("left")) {
+		  Cell newCell = cells[x][y-1];
+		  player.setEstate(newCell.getEstate());
+		  cells[x][y-1].setPlayer(player);
+		  cells[x][y-1].setEmpty(false);
+		  player.setPos(x, y-1);
+	  }else if(direction.equals("right")) {
+		  Cell newCell = cells[x][y+1];
+		  player.setEstate(newCell.getEstate());
+		  cells[x][y+1].setPlayer(player);
+		  cells[x][y+1].setEmpty(false);
+		  player.setPos(x, y+1);
+	  }
+  }
 
   /**
    * Draws the board for the current game state
    */
   public void drawBoard() {
     for(int i = 0; i < 24; i++) {
+    	System.out.println("");
       for(int j = 0; j < 24; j++) {
+    	System.out.print("|");
         Cell cell = cells[i][j];
-        if(!cell.isEmpty() && cell.getPlayer() != null) {
-          System.out.print("");
+        // Places player icons on board
+        if(!cell.isEmpty && cell.getPlayer() != null) {
+        	if(cell.getPlayer().getName().equals("Lucilla")) {
+        		System.out.print("L");
+        	}else if(cell.getPlayer().getName().equals("Bert")) {
+        		System.out.print("B");
+        	}else if(cell.getPlayer().getName().equals("Maline")) {
+        		System.out.print("M");
+        	}else if(cell.getPlayer().getName().equals("Percy")) {
+        		System.out.print("P");
+        	}
+        	// Places estate icons on board
         }else if(!cell.isEmpty && cell.getEstate() != null) {
-          System.out.print("");
+        	if(cell.getEstate().getName().equals("Haunted House")) {
+        		System.out.print("H");
+        	}else if(cell.getEstate().getName().equals("Manic Manor")) {
+        		System.out.print("M");
+        	}else if(cell.getEstate().getName().equals("Villa Celia")) {
+        		System.out.print("V");
+        	}else if(cell.getEstate().getName().equals("Calamity Castle")) {
+        		System.out.print("C");
+        	}else if(cell.getEstate().getName().equals("Peril Palace")) {
+        		System.out.print("P");
+        	}
+        	
         }else {
-          System.out.print("");
+          System.out.print("_");
         }
       }
     }
