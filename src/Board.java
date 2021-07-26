@@ -7,7 +7,6 @@ public class Board{
   // MEMBER VARIABLES
   //------------------------
   public Cell[][] cells = new Cell[24][24];
-  public static List<Estate> allEstates = new ArrayList<Estate>();
 
   //------------------------
   // CONSTRUCTOR
@@ -25,31 +24,46 @@ public class Board{
 
   public void delete(){}
 
+  /**
+   * Set all the cells that need estates
+   */
   public void setEstates() {
+    Estate hauntedHouse = Game.getEstate("Haunted House");
+    Estate manicManor = Game.getEstate("Manic Manor");
+    Estate villaCelia = Game.getEstate("Villa Celia");
+    Estate calamityCastle = Game.getEstate("Calamity Castle");
+    Estate perilPalace = Game.getEstate("Peril Palace");
       for(int i = 0; i < 5; i++) { // nested for loop to set an estate to all the cells that need it
         for(int j = 0; j < 5; j++) {
           Cell cell;
           cell = cells[2 + i][2 + j];
           cell.setEmpty(false);
-          cell.setEstate(allEstates.get(0));
+          cell.setEstate(hauntedHouse);
 
           cell = cells[2 + i][17 + j];
           cell.setEmpty(false);
-          cell.setEstate(allEstates.get(1));
+          cell.setEstate(manicManor);
 
           cell = cells[9 + i][10 + j];
           cell.setEmpty(false);
-          cell.setEstate(allEstates.get(2));
+          cell.setEstate(villaCelia);
 
           cell = cells[17 + i][2 + j];
           cell.setEmpty(false);
-          cell.setEstate(allEstates.get(3));
+          cell.setEstate(calamityCastle);
 
           cell = cells[17 + i][17 + j];
           cell.setEmpty(false);
-          cell.setEstate(allEstates.get(4));
+          cell.setEstate(perilPalace);
         }
     }
+  }
+
+  /**
+   * Draws the board for the current game state
+   */
+  public void drawBoard() {
+
   }
 
 }

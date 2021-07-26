@@ -3,9 +3,9 @@ public class Cell{
   //------------------------
   // MEMBER VARIABLES
   //------------------------
-  public Estate estate;
+  public Estate estate = null;
   public boolean isEmpty;
-  public Player player;
+  public Player player = null;
   //------------------------
   // CONSTRUCTOR
   //------------------------
