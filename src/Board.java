@@ -63,7 +63,17 @@ public class Board{
    * Draws the board for the current game state
    */
   public void drawBoard() {
-
+    for(int i = 0; i < 24; i++) {
+      for(int j = 0; j < 24; j++) {
+        Cell cell = cells[i][j];
+        if(!cell.isEmpty() && cell.getPlayer() != null) {
+          System.out.print("");
+        }else if(!cell.isEmpty && cell.getEstate() != null) {
+          System.out.print("");
+        }else {
+          System.out.print("");
+        }
+      }
+    }
   }
-
 }
