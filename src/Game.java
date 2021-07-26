@@ -14,6 +14,7 @@ public class Game{
 	public static List<Weapon> weapons = new ArrayList<Weapon>();
 	public static List<Estate> estates = new ArrayList<Estate>();
 	public static Guess finalGuess = new Guess(null, null, null);
+	Board board = new Board();
 	Scanner sc;
 
   //------------------------
@@ -27,6 +28,7 @@ public class Game{
 	  StartGame();
 	  chooseMurderer();
 	  dealCards();
+	  board.setEstates();
   }
   
   /**
@@ -146,6 +148,10 @@ public class Game{
 	  finalGuess.setMurderer(guess);
 	  
   }
+
+  public void startBoard() {
+  	Board.drawBoard();
+  }
   
   /**
    * Deals out the remainder of cards to all of the players
@@ -183,6 +189,7 @@ public class Game{
 	  System.out.println("Murderer" + " = " + finalGuess.getMurderer().toString());
 	  for (Player c : players) {
 		  System.out.println(c.getName() + " = Hand" + c.getHand());
+
 	  }
   }
 }
