@@ -1,7 +1,15 @@
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.swing.AbstractAction;
+import javax.swing.Icon;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class Game{
 
@@ -24,6 +32,7 @@ public class Game{
 	public static int index = 0;
 	Scanner sc = new Scanner(System.in);
 	Board board = new Board();
+	GUI gui = new GUI();
 	public int count = 0;
 	public Player currentTurn;
 	public Estate currentEstate;
@@ -39,13 +48,23 @@ public class Game{
 	  setPlayers();
 	  board.setEstates();
 	  board.setPlayers();
-	  startGame();
 	  chooseMurderer();
 	  dealCards();
+	  gui.menuScreen();
+	  begin();
+	  startGame();
 	  board.drawBoard();
 	  start();
   }
   
+  public void begin() {
+	  while(true) {
+		  System.out.println("\n");
+		  if(gui.set == false) {
+			  break;
+		  }
+	  }
+  }
   /**
    * 
    * starts the game asking for the amount of players
@@ -494,7 +513,7 @@ public class Game{
    * Chooses the murderer randomly
    * 
    */
-  public void chooseMurderer() {
+  public static void chooseMurderer() {
 	  //shuffles all of the collections 
 	  Collections.shuffle(characters);
 	  Collections.shuffle(weapons);
@@ -507,7 +526,7 @@ public class Game{
    * Deals out the remainder of cards to all of the players
    * 
    */
-  public void dealCards() {
+  public static void dealCards() {
 	  List<Card> allCards = new ArrayList<Card>();
 	  ArrayList<Card> hand;
 	  allCards.addAll(characters);
