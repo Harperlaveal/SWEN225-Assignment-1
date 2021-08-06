@@ -9,6 +9,7 @@ public class Player {
 	private int yPos = 0;
 	private Estate estate = null;
 	private boolean inEstate = false;
+	public String character;
 	
 	public Player(String aName){
 		name = aName;
