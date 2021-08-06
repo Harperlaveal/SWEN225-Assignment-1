@@ -21,6 +21,10 @@ public class GUI extends JFrame implements ActionListener{
 	public Map<String, Player> players = new HashMap<>();
 	public JTextField nameTextField;
 	public String playerChoice = "";
+	public int move;
+	public JFrame boardFrame;
+	public JLabel showHand;
+	public JLabel showRoll;
 
 	public void menuScreen(){
 		menuFrame = new JFrame("Menu Screen");
@@ -128,6 +132,51 @@ public class GUI extends JFrame implements ActionListener{
 		d.setSize(500,500);
 		d.setVisible(true);
 	}
+	
+	public void gameBoard() {
+	  	move = Game.diceRoll();
+	  	boardFrame = new JFrame("Board");
+		JButton hand = new JButton("Hand");
+		JButton resetGame = new JButton("Reset Game");
+		JButton roll = new JButton("Roll");
+		JButton quitGame = new JButton("Quit Game");
+		resetGame.setBounds(10, 10, 150, 150);
+		hand.setBounds(10, 170, 150, 150);
+		roll.setBounds(10, 330, 150, 150);
+		quitGame.setBounds(10, 490, 150, 150);
+		hand.addActionListener(this);
+		resetGame.addActionListener(this);
+		roll.addActionListener(this);
+		quitGame.addActionListener(this);
+		boardFrame.add(resetGame);
+		boardFrame.add(hand);
+		boardFrame.add(roll);
+		boardFrame.add(quitGame);
+		String currentPlayer = Game.players.get(Game.index).getName();
+		JLabel current = new JLabel("Current Player");
+		current.setBounds(175, 10, 500, 15);
+		current.setText("It is " + currentPlayer +"'s turn");
+		boardFrame.add(current);
+	    boardFrame.setSize(800,700);
+	    boardFrame.setLayout(null);  
+	    boardFrame.setVisible(true);
+	}
+	
+  public void showHand() {
+	  Player player = Game.players.get(Game.index);
+	  showHand = new JLabel("showHand");
+	  showHand.setBounds(175, 30, 300, 15);
+	  boardFrame.add(showHand);
+	  showHand.setText(player.toString() + "'s Hand" + player.getHand());
+  }
+  
+  public void showRoll() {
+	  showHand.setText("");
+	  showRoll = new JLabel("showRoll");
+	  showRoll.setBounds(175, 50, 300, 15);
+	  boardFrame.add(showRoll);
+	  showRoll.setText("You Rolled a: " + Integer.toString(move));
+  }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -185,9 +234,17 @@ public class GUI extends JFrame implements ActionListener{
 					System.out.println();
 				}
 				// add call to the main game frame method here
+				nameFrame.setVisible(false);
+				gameBoard();
 			}
+		} else if (action.equals("Hand")) {
+			showHand();
+		} else if (action.equals("Roll")) {
+			showRoll();
+		} else if (action.equals("Reset Game")) {
+			System.exit(0);
+		} else if (action.equals("Quit Game")) {
+			System.exit(0);
 		}
 	}
-
-
 }
