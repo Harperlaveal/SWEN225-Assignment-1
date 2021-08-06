@@ -13,6 +13,7 @@ public class GUI extends JFrame implements ActionListener{
 	public static JMenuItem start, exit;
 	public boolean set = true;
 	public static JDialog d;
+
 	
 	  public void menuScreen(){
 		  frame = new JFrame("Menu Screen");
@@ -26,10 +27,48 @@ public class GUI extends JFrame implements ActionListener{
 	      menu.add(exit);
 	      bar.add(menu);
 	      frame.setJMenuBar(bar);
-		  frame.setSize(500, 500);
+		  frame.setSize(1000, 1000);
 	      frame.setVisible(true);
 	      frame.setResizable(false);
 	  }
+
+	public void playerCount(){
+		frame = new JFrame("Number of players");
+		JTextField t1;
+		t1=new JTextField("Number of players.");
+		t1.setBounds(50,100, 200,30);
+		frame.add(t1);
+		frame.setSize(1000, 1000);
+		frame.setLayout(null);
+		frame.setVisible(true);
+		frame.setResizable(false);
+	}
+	public void enterName(){
+		frame = new JFrame("Enter name");
+		JTextField t1;
+		t1=new JTextField("Enter players name.");
+		t1.setBounds(50,100, 200,30);
+		frame.add(t1);
+		frame.setSize(1000, 1000);
+		frame.setLayout(null);
+		frame.setVisible(true);
+		frame.setResizable(false);
+	}
+
+	public void pickCharacter(){
+		frame = new JFrame("Choose character");
+		JRadioButton r1=new JRadioButton("A) Male");
+		JRadioButton r2=new JRadioButton("B) Female");
+		r1.setBounds(75,50,100,30);
+		r2.setBounds(75,100,100,30);
+		ButtonGroup bg=new ButtonGroup();
+		bg.add(r1);bg.add(r2);
+		frame.add(r1);frame.add(r2);
+		frame.setJMenuBar(bar);
+		frame.setSize(1000, 1000);
+		frame.setVisible(true);
+		frame.setResizable(false);
+	}
 
 	  public void exitDialog(){
 		  JFrame f= new JFrame();
@@ -45,7 +84,7 @@ public class GUI extends JFrame implements ActionListener{
 		  });
 		  d.add( new JLabel ("Are you sure you want to quit?"));
 		  d.add(b);
-		  d.setSize(300,300);
+		  d.setSize(500,500);
 		  d.setVisible(true);
 	  }
 
@@ -56,6 +95,9 @@ public class GUI extends JFrame implements ActionListener{
 		if (action.equals("Start Game")) {
 			frame.setVisible(false);
 			set = false;
+			playerCount();
+			enterName();
+			pickCharacter();
 		} else if (action.equals("Exit Game")) {
 			exitDialog();
 			frame.setVisible(false);
