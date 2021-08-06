@@ -1,10 +1,8 @@
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.*;
 
 public class GUI extends JFrame implements ActionListener{
 	
@@ -14,6 +12,7 @@ public class GUI extends JFrame implements ActionListener{
 	public static JMenuBar bar;
 	public static JMenuItem start, exit;
 	public boolean set = true;
+	public static JDialog d;
 	
 	  public void menuScreen(){
 		  frame = new JFrame("Menu Screen");
@@ -32,13 +31,33 @@ public class GUI extends JFrame implements ActionListener{
 	      frame.setResizable(false);
 	  }
 
+	  public void exitDialog(){
+		  JFrame f= new JFrame();
+		  d = new JDialog(f , "exitDialog", true);
+		  d.setLayout( new FlowLayout() );
+		  JButton b = new JButton ("Yes");
+		  b.addActionListener ( new ActionListener()
+		  {
+			  public void actionPerformed( ActionEvent e )
+			  {
+				  d.setVisible(false);
+			  }
+		  });
+		  d.add( new JLabel ("Are you sure you want to quit?"));
+		  d.add(b);
+		  d.setSize(300,300);
+		  d.setVisible(true);
+	  }
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		String action = e.getActionCommand();
 		if (action.equals("Start Game")) {
 			frame.setVisible(false);
 			set = false;
 		} else if (action.equals("Exit Game")) {
+			exitDialog();
 			frame.setVisible(false);
 			System.exit(0);
 		}
