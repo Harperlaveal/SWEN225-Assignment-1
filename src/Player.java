@@ -55,6 +55,8 @@ public class Player {
 	public void setEstate(Estate estate) {
 		this.estate = estate;
 	}
+
+	public void setName(String name) { this.name = name; }
 	
 	public boolean inEstate() {
 		return inEstate;

@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +10,7 @@ import javax.swing.*;
 public class GUI extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	public JFrame menuFrame, playerFrame, nameFrame, characterFrame;
+	public JFrame menuFrame, playerFrame, characterFrame;
 	public static JMenu menu;
 	public static JMenuBar bar;
 	public static JMenuItem start, exit;
@@ -25,6 +25,7 @@ public class GUI extends JFrame implements ActionListener{
 	public JFrame boardFrame;
 	public JLabel showHand;
 	public JLabel showRoll;
+	public ArrayList<JFrame> nameFrames = new ArrayList<JFrame>();
 
 	public void menuScreen(){
 		menuFrame = new JFrame("Menu Screen");
@@ -82,7 +83,7 @@ public class GUI extends JFrame implements ActionListener{
 	 */
 	public void enterName(){
 		playerFrame.setVisible(false);
-		nameFrame = new JFrame("Enter name");
+		JFrame nameFrame = new JFrame("Enter name");
 		nameFrame.setSize(400, 300);
 		nameTextField = new JTextField("");
 		nameTextField.setColumns(5);
@@ -112,34 +113,47 @@ public class GUI extends JFrame implements ActionListener{
 		nameFrame.add(optionFour);
 		nameFrame.setVisible(true);
 		nameFrame.setResizable(false);
+		nameFrames.add(nameFrame);
 
 	}
 
 	public void exitDialog(){
-		JFrame f= new JFrame();
-		d = new JDialog(f , "exitDialog", true);
+		JFrame exitFrame = new JFrame();
+		d = new JDialog(exitFrame , "exitDialog", true);
 		d.setLayout( new FlowLayout() );
-		JButton b = new JButton ("Yes");
-		b.addActionListener ( new ActionListener()
+		JButton yesButton = new JButton ("Yes");
+		JButton noButton = new JButton ("No");
+		yesButton.addActionListener ( new ActionListener()
 		{
 			public void actionPerformed( ActionEvent e )
 			{
 				d.setVisible(false);
+				menuFrame.setVisible(false);
+				System.exit(0);
+			}
+		});
+		noButton.addActionListener ( new ActionListener()
+		{
+			public void actionPerformed( ActionEvent e )
+			{
+				d.setVisible(false);
+				exitFrame.setVisible(false);
 			}
 		});
 		d.add( new JLabel ("Are you sure you want to quit?"));
-		d.add(b);
-		d.setSize(500,500);
+		d.add(yesButton);
+		d.add(noButton);
+		d.setSize(400,300);
 		d.setVisible(true);
 	}
-	
+
 	public void gameBoard() {
-	  	move = Game.diceRoll();
-	  	boardFrame = new JFrame("Board");
+		move = Game.diceRoll();
+		boardFrame = new JFrame("Board");
 		JButton hand = new JButton("Hand");
 		JButton resetGame = new JButton("Reset Game");
 		JButton roll = new JButton("Roll");
-		JButton quitGame = new JButton("Quit Game");
+		JButton quitGame = new JButton("Exit Game");
 		resetGame.setBounds(10, 10, 150, 150);
 		hand.setBounds(10, 170, 150, 150);
 		roll.setBounds(10, 330, 150, 150);
@@ -155,28 +169,41 @@ public class GUI extends JFrame implements ActionListener{
 		String currentPlayer = Game.players.get(Game.index).getName();
 		JLabel current = new JLabel("Current Player");
 		current.setBounds(175, 10, 500, 15);
-		current.setText("It is " + currentPlayer +"'s turn");
+		if(players.get(currentPlayer) == null) {
+			current.setText("It is " + currentPlayer +"'s (bot) turn");
+		}else {
+			current.setText("It is " + currentPlayer +"'s (" + players.get(currentPlayer).getName() + ") turn");
+		}
 		boardFrame.add(current);
-	    boardFrame.setSize(800,700);
-	    boardFrame.setLayout(null);  
-	    boardFrame.setVisible(true);
+		boardFrame.setSize(800,700);
+		boardFrame.setLayout(null);
+		boardFrame.setVisible(true);
 	}
-	
-  public void showHand() {
-	  Player player = Game.players.get(Game.index);
-	  showHand = new JLabel("showHand");
-	  showHand.setBounds(175, 30, 300, 15);
-	  boardFrame.add(showHand);
-	  showHand.setText(player.toString() + "'s Hand" + player.getHand());
-  }
-  
-  public void showRoll() {
-	  showHand.setText("");
-	  showRoll = new JLabel("showRoll");
-	  showRoll.setBounds(175, 50, 300, 15);
-	  boardFrame.add(showRoll);
-	  showRoll.setText("You Rolled a: " + Integer.toString(move));
-  }
+
+	public void showHand() {
+		Player player = Game.players.get(Game.index);
+		showHand = new JLabel("showHand");
+		showHand.setBounds(175, 30, 300, 15);
+		boardFrame.add(showHand);
+		showHand.setText(player.toString() + "'s Hand" + player.getHand());
+	}
+
+	public void showRoll() {
+		showHand.setText("");
+		showRoll = new JLabel("showRoll");
+		showRoll.setBounds(175, 50, 300, 15);
+		boardFrame.add(showRoll);
+		showRoll.setText("You Rolled a: " + Integer.toString(move));
+	}
+
+	/**
+	 * Hides all the name frames
+	 */
+	public void hideNameFrames() {
+		for(JFrame frame : nameFrames) {
+			frame.setVisible(false);
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -188,8 +215,6 @@ public class GUI extends JFrame implements ActionListener{
 
 		} else if (action.equals("Exit Game")) {
 			exitDialog();
-			menuFrame.setVisible(false);
-			System.exit(0);
 
 		} else if (action.equals("1")) { // sets player count to which button is selected
 			totalPlayerCount = 1;
@@ -224,7 +249,8 @@ public class GUI extends JFrame implements ActionListener{
 			String name = nameTextField.getText();
 			Player newPlayer = new Player(name);
 			newPlayer.character = playerChoice;
-			players.put(name, newPlayer);
+			newPlayer.setName(name);
+			players.put(playerChoice, newPlayer);
 			if(currentPlayerCount < totalPlayerCount) {
 				enterName();
 			}else {
@@ -233,8 +259,7 @@ public class GUI extends JFrame implements ActionListener{
 					System.out.println(player.character);
 					System.out.println();
 				}
-				// add call to the main game frame method here
-				nameFrame.setVisible(false);
+				hideNameFrames();
 				gameBoard();
 			}
 		} else if (action.equals("Hand")) {
@@ -242,9 +267,12 @@ public class GUI extends JFrame implements ActionListener{
 		} else if (action.equals("Roll")) {
 			showRoll();
 		} else if (action.equals("Reset Game")) {
-			System.exit(0);
-		} else if (action.equals("Quit Game")) {
-			System.exit(0);
+			totalPlayerCount = 0;
+			currentPlayerCount = 0;
+			nameFrames.clear();
+			players.clear();
+			boardFrame.setVisible(false);
+			playerCount();
 		}
 	}
 }
