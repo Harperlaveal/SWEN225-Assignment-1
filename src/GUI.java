@@ -27,6 +27,9 @@ public class GUI extends JFrame implements ActionListener{
 	public JLabel showRoll;
 	public ArrayList<JFrame> nameFrames = new ArrayList<JFrame>();
 
+	/**
+	 * Setting up the initial menu screen frame
+	 */
 	public void menuScreen(){
 		menuFrame = new JFrame("Menu Screen");
 		menu = new JMenu("Menu");
@@ -117,6 +120,9 @@ public class GUI extends JFrame implements ActionListener{
 
 	}
 
+	/**
+	 * Confirmation process for exiting the program
+	 */
 	public void exitDialog(){
 		JFrame exitFrame = new JFrame();
 		d = new JDialog(exitFrame , "exitDialog", true);
@@ -147,6 +153,9 @@ public class GUI extends JFrame implements ActionListener{
 		d.setVisible(true);
 	}
 
+	/**
+	 * Setting up the main game Frame GUI
+	 */
 	public void gameBoard() {
 		move = Game.diceRoll();
 		boardFrame = new JFrame("Board");
@@ -180,6 +189,9 @@ public class GUI extends JFrame implements ActionListener{
 		boardFrame.setVisible(true);
 	}
 
+	/**
+	 * Show which cards are in the current player's hand
+	 */
 	public void showHand() {
 		Player player = Game.players.get(Game.index);
 		showHand = new JLabel("showHand");
@@ -188,6 +200,9 @@ public class GUI extends JFrame implements ActionListener{
 		showHand.setText(player.toString() + "'s Hand" + player.getHand());
 	}
 
+	/**
+	 * Show which number was rolled
+	 */
 	public void showRoll() {
 		showHand.setText("");
 		showRoll = new JLabel("showRoll");
