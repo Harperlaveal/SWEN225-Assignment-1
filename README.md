@@ -1,2 +1,5 @@
 # SWEN225-Assignment-1
-Assignment 1 SWEN225
+
+Group Assignment 1 and 2 SWEN225
+
+
