@@ -1,11 +1,15 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board{
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
   public Cell[][] cells = new Cell[24][24];
+  public List<String> board;
 
-  //------------------------
+	//------------------------
   // CONSTRUCTOR
   //------------------------
   
@@ -127,40 +131,57 @@ public class Board{
    * Draws the board for the current game state
    */
   public void drawBoard() {
+  	board = new ArrayList<String>(); // Board will be added to this list to be stored and decompiled when necessary
     for(int i = 0; i < 24; i++) {
     	System.out.println("");
+    	board.add("");
       for(int j = 0; j < 24; j++) {
     	System.out.print("|");
+    	board.add("|");
         Cell cell = cells[i][j];
         // Places player icons on board
         if(!cell.isEmpty && cell.getPlayer() != null) {
         	if(cell.getPlayer().getName().equals("Lucilla")) {
         		System.out.print("L");
+        		board.add("L");
         	}else if(cell.getPlayer().getName().equals("Bert")) {
         		System.out.print("B");
+        		board.add("B");
         	}else if(cell.getPlayer().getName().equals("Maline")) {
         		System.out.print("M");
+        		board.add("M");
         	}else if(cell.getPlayer().getName().equals("Percy")) {
         		System.out.print("P");
+        		board.add("P");
         	}
         	// Places estate icons on board
         }else if(!cell.isEmpty && cell.getEstate() != null) {
         	if(cell.getEstate().getName().equals("Haunted House")) {
         		System.out.print("H");
+        		board.add("H");
         	}else if(cell.getEstate().getName().equals("Manic Manor")) {
         		System.out.print("M");
+        		board.add("M");
         	}else if(cell.getEstate().getName().equals("Villa Celia")) {
         		System.out.print("V");
+        		board.add("V");
         	}else if(cell.getEstate().getName().equals("Calamity Castle")) {
         		System.out.print("C");
+        		board.add("C");
         	}else if(cell.getEstate().getName().equals("Peril Palace")) {
         		System.out.print("P");
+        		board.add("P");
         	}
         	
         }else {
           System.out.print("_");
+          board.add("_");
         }
       }
     }
   }
+
+	public List<String> getBoard() {
+		return board;
+	}
 }
