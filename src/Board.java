@@ -7,7 +7,7 @@ public class Board{
   // MEMBER VARIABLES
   //------------------------
   public Cell[][] cells = new Cell[24][24];
-  public List<String> board;
+  public ArrayList<String> board;
 
 	//------------------------
   // CONSTRUCTOR
@@ -181,7 +181,7 @@ public class Board{
     }
   }
 
-	public List<String> getBoard() {
+	public ArrayList<String> getBoard() {
 		return board;
 	}
 }

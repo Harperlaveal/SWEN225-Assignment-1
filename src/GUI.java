@@ -190,6 +190,19 @@ public class GUI extends JFrame implements ActionListener{
 	}
 
 	/**
+	 * Helper method to update the actual game board in the game board frame
+	 */
+	public void updateBoard() {
+		ArrayList<String> board = Game.board.getBoard();
+		String boardString = "";
+		for(String string : board) {
+			boardString += string;
+		}
+		JLabel boardLabel = new JLabel(boardString);
+		boardFrame.add(boardLabel);
+	}
+
+	/**
 	 * Show which cards are in the current player's hand
 	 */
 	public void showHand() {

@@ -6,9 +6,7 @@ import java.util.Scanner;
 
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -33,7 +31,7 @@ public class Game{
 	public static int move;
 	public static int index = 0;
 	Scanner sc = new Scanner(System.in);
-	Board board = new Board();
+	static Board board = new Board();
 	GUI gui = new GUI();
 	public int count = 0;
 	public Player currentTurn;
@@ -54,7 +52,7 @@ public class Game{
 	  dealCards();
 	  gui.menuScreen();
 	  begin();
-	  //startGame();
+	  startGame();
 	  board.drawBoard();
 	  start();
   }
@@ -67,21 +65,20 @@ public class Game{
 		  }
 	  }
   }
-  
   /**
    * 
    * starts the game asking for the amount of players
    * 
    */
-  //public void startGame() {
-	  //System.out.println("Each player choose a character out of Lucilla, Bert, Maline and Percy");
-	 // int num;
-	 // Collections.shuffle(players); // shuffles the collection
-	 // do {
-	 // System.out.println("How many players 1-4:");
-	 // num = sc.nextInt();
-	 // } while (!isValid(num));
- // }
+  public void startGame() {
+	  System.out.println("Each player choose a character out of Lucilla, Bert, Maline and Percy");
+	  int num;
+	  Collections.shuffle(players); // shuffles the collection
+	  do {
+	  System.out.println("How many players 1-4:");
+	  num = sc.nextInt();
+	  } while (!isValid(num));
+  }
   
   /**
    * Adds all players to a list
@@ -661,10 +658,10 @@ public class Game{
    * @return
    * the amount of spaces player is allowed to move
    */
-  public static int getMove() {
+  public int getMove() {
 	  return move;
   }
-  
+
   public static void main(String[] args) {
 	  new Game();
   }
