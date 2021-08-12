@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Player class which stores all the details of a player for use within the game class
+ */
 public class Player {
 	
 	private String name;

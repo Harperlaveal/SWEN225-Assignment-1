@@ -1,3 +1,6 @@
+/**
+ * Weapon
+ */
 public class Weapon implements Card{
 
   //------------------------

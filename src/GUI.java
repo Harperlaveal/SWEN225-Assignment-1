@@ -7,6 +7,9 @@ import java.util.Map;
 
 import javax.swing.*;
 
+/**
+ * GUI class which handles all of the frames and the transitions between them
+ */
 public class GUI extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
@@ -176,6 +179,7 @@ public class GUI extends JFrame implements ActionListener{
 			current.setText("It is " + currentPlayer +"'s (" + players.get(currentPlayer).getName() + ") turn");
 		}
 		boardFrame.add(current);
+		updateBoard();
 		boardFrame.setSize(800,700);
 		boardFrame.setLayout(null);
 		boardFrame.setVisible(true);
@@ -191,6 +195,7 @@ public class GUI extends JFrame implements ActionListener{
 			boardString += string;
 		}
 		JLabel boardLabel = new JLabel(boardString);
+		boardLabel.setBounds(175, 70, 500, 500);
 		boardFrame.add(boardLabel);
 	}
 

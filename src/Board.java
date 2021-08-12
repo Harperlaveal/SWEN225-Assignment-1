@@ -1,6 +1,8 @@
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * Board class stores each individual Cell and uses them to convert the board to a printable string
+ */
 public class Board{
 
   //------------------------
@@ -132,9 +134,10 @@ public class Board{
    */
   public void drawBoard() {
   	board = new ArrayList<String>(); // Board will be added to this list to be stored and decompiled when necessary
-    for(int i = 0; i < 24; i++) {
+	  board.add("<html>");
+	  for(int i = 0; i < 24; i++) {
     	System.out.println("");
-    	board.add("");
+    	board.add("<br/>");
       for(int j = 0; j < 24; j++) {
     	System.out.print("|");
     	board.add("|");
@@ -179,6 +182,7 @@ public class Board{
         }
       }
     }
+	  board.add("</html>");
   }
 
 	public ArrayList<String> getBoard() {

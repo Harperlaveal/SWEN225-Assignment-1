@@ -1,3 +1,6 @@
+/**
+ * Cell class that simply stores either a player, an estate or is empty for use in Board class
+ */
 public class Cell{
 
   //------------------------

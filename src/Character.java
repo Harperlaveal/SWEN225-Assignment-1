@@ -1,3 +1,6 @@
+/**
+ *
+ */
 public class Character implements Card{
 
   //------------------------

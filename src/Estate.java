@@ -1,5 +1,8 @@
 import java.util.List;
 
+/**
+ *
+ */
 public class Estate implements Card{
 
   //------------------------

@@ -11,6 +11,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+/**
+ * Game class controls all of the game logic in order to run through the entire game
+ */
 public class Game{
 
   //------------------------
@@ -74,10 +77,10 @@ public class Game{
 	  System.out.println("Each player choose a character out of Lucilla, Bert, Maline and Percy");
 	  int num;
 	  Collections.shuffle(players); // shuffles the collection
-	  do {
-	  System.out.println("How many players 1-4:");
-	  num = sc.nextInt();
-	  } while (!isValid(num));
+//	  do {
+//	  	System.out.println("How many players 1-4:");
+//	  	num = sc.nextInt();
+//	  } while (!isValid(num));
   }
   
   /**

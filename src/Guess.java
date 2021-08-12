@@ -1,4 +1,6 @@
-
+/**
+ *
+ */
 public class Guess {
 	Character character;
 	Weapon weapon;
