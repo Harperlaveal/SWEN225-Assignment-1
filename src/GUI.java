@@ -262,6 +262,10 @@ public class GUI extends JFrame implements ActionListener{
 
 	}
 
+	/**
+	 * Actions performed
+	 * @param ActionEvent
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();

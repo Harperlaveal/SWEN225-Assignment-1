@@ -24,12 +24,12 @@ public class Game{
 	public static List<Character> characters = new ArrayList<Character>();
 	public static List<Weapon> weapons = new ArrayList<Weapon>();
 	public static List<Estate> estates = new ArrayList<Estate>();
-	
+
 	public static List<Player> orderedPlayers = new ArrayList<Player>();
 	public static List<Character> orderedCharacters = new ArrayList<Character>();
 	public static List<Weapon> orderedWeapons = new ArrayList<Weapon>();
 	public static List<Estate> orderedEstates = new ArrayList<Estate>();
-	
+
 	public static Guess finalGuess = new Guess(null, null, null);
 	public static int move;
 	public static int index = 0;
@@ -43,7 +43,9 @@ public class Game{
   //------------------------
   // CONSTRUCTOR
   //------------------------
-
+/**
+ * Game constructor
+ */
   public Game(){
 	  setCharacters();
 	  setWeapons();
@@ -59,7 +61,10 @@ public class Game{
 	  board.drawBoard();
 	  start();
   }
-  
+
+  /**
+   * Begin method to begin the game
+   */
   public void begin() {
 	  while(true) {
 		  System.out.println("\n");
@@ -69,9 +74,9 @@ public class Game{
 	  }
   }
   /**
-   * 
+   *
    * starts the game asking for the amount of players
-   * 
+   *
    */
   public void startGame() {
 	  System.out.println("Each player choose a character out of Lucilla, Bert, Maline and Percy");
@@ -82,10 +87,10 @@ public class Game{
 //	  	num = sc.nextInt();
 //	  } while (!isValid(num));
   }
-  
+
   /**
    * Adds all players to a list
-   * 
+   *
    * @param player1
    * @param player2
    * @param player3
@@ -101,11 +106,11 @@ public class Game{
 	orderedPlayers.add(player3);
 	orderedPlayers.add(player4);
   }
-  
+
   /**
-   * 
-   * Checks for valid number of players in game 
-   * 
+   *
+   * Checks for valid number of players in game
+   *
    * @param num
    * number of players given from input
    * @return
@@ -122,10 +127,10 @@ public class Game{
 	  }
 	  return true;
   }
-  
+
   /**
    * Starts game by choosing a random player
-   * 
+   *
    */
   public void start() {
 	  count = 0;
@@ -133,7 +138,7 @@ public class Game{
 	  Player player = players.get(index); // gets player at start of list for first turn
 	  System.out.println("It is " + player.toString() + "'s turn");
 	  System.out.println("Type 'ready' to begin turn");
-	  String ready = sc.next(); // checks if player is ready 
+	  String ready = sc.next(); // checks if player is ready
 	  if(ready.equals("ready")) {
 		  handOrDice(player);
 	  } else {
@@ -141,10 +146,10 @@ public class Game{
 		  start();
 	  }
   }
-  
+
   /**
    * Checks for game over
-   * 
+   *
    */
   public void gameOver() {
 	  if (players.isEmpty()) { // checks if no players are left in the game
@@ -153,10 +158,10 @@ public class Game{
 		  System.exit(0);
 	  }
   }
-  
+
   /**
    * Choose between checking hand or dice
-   * 
+   *
    * @param player
    * current player
    */
@@ -181,11 +186,11 @@ public class Game{
 		  handOrDice(player);
 	  }
   }
-  
+
   /**
    * Checks if player want to make a guess or end turn
-   * 
-   * 
+   *
+   *
    * @param player
    * current player
    */
@@ -196,45 +201,46 @@ public class Game{
 		  if (player.inEstate()) { // checks to see if player is currently inside an estate
 			  System.out.println("Type 'guess' to make a guess using the estate you are in, 'solve' to make a final solve attempt or 'end' to end turn");
 			  String string = sc.next();
-			  if(string.equals("guess")) { 
-				  makeGuess(player); 
+			  if(string.equals("guess")) {
+				  makeGuess(player);
 				  valid = false; // acknowledges valid input
 			  }
-			  else if(string.equals("solve")) { 
-				  makeFinalGuess(player); 
+			  else if(string.equals("solve")) {
+				  makeFinalGuess(player);
 				  valid = false;
 			  }
 			  else if (string.equals("end")) {
 				  index = (index + 1) % players.size(); // gets next player in list
-				  start(); 
+				  start();
 				  valid = false;
 			  }
-			  else { 
-				  System.out.println("Invalid Input"); 
+			  else {
+				  System.out.println("Invalid Input");
 			  }
 		  } else { // if player is not in an estate
 			  System.out.println("Type 'solve' to make a final solve attempt or 'end' to end turn");
 			  String string = sc.next();
-			  if(string.equals("solve")) { 
-				  makeFinalGuess(player); 
+			  if(string.equals("solve")) {
+				  makeFinalGuess(player);
 				  valid = false;
 			  }
 			  else if (string.equals("end")) {
-				  index = (index + 1) % players.size(); 
-				  start(); 
+				  index = (index + 1) % players.size();
+				  start();
 				  valid = false;
 			  }
-			  else { 
-				  System.out.println("Invalid Input"); 
+			  else {
+				  System.out.println("Invalid Input");
 			  }
 		  }
 	  }
   }
-  
+
   /**
    * Player makes a guess if they are in an estate
-   * 
-   * 
+   *
+   * @param Player
+   * current player
    */
   public void makeGuess(Player player) {
 	  boolean chooseChar = true;
@@ -287,10 +293,10 @@ public class Game{
 	  System.out.println("Your guess is " + character.toString() + ", " + weapon.toString() + ", " + currentEstate.toString());
 	  refute(player);
   }
-  
+
   /**
    * Gives players ability to refute guess
-   * 
+   *
    * @param player
    * current player
    */
@@ -343,10 +349,10 @@ public class Game{
 		  }
 	  }
   }
-  
+
   /**
    * Makes a final guess and check whether not player has won or not
-   * 
+   *
    * @param player
    * current player
    */
@@ -439,7 +445,12 @@ public class Game{
 //------------------------
   // INTERFACE
   //------------------------
-  
+
+
+  /**
+   * Sets up all the players
+   *
+   */
   public void setPlayers() {
 	  Player player1 = new Player("Lucilla");
 	  Player player2 = new Player("Bert");
@@ -449,7 +460,7 @@ public class Game{
   }
   /**
    * Sets up all estate cards
-   * 
+   *
    */
   public void setEstateWeapons() {
 	  Collections.shuffle(weapons); // mixes weapons up
@@ -469,11 +480,11 @@ public class Game{
 	  orderedEstates.add(calamity_castle);
 	  orderedEstates.add(peril_palace);
   }
-  
+
   /**
    * Sets up all character cards
-   * 
-   * 
+   *
+   *
    */
   public void setCharacters() {
 	  Character lucilla = new Character("Lucilla");
@@ -489,10 +500,10 @@ public class Game{
 	  orderedCharacters.add(maline);
 	  orderedCharacters.add(percy);
   }
-  
+
   /**
    * Sets up all weapon cards
-   * 
+   *
    */
   public void setWeapons() {
 	  Weapon broom = new Weapon("Broom");
@@ -511,23 +522,23 @@ public class Game{
 	  orderedWeapons.add(shovel);
 	  orderedWeapons.add(ipad);
   }
-  
+
   /**
    * Chooses the murderer randomly
-   * 
+   *
    */
   public static void chooseMurderer() {
-	  //shuffles all of the collections 
+	  //shuffles all of the collections
 	  Collections.shuffle(characters);
 	  Collections.shuffle(weapons);
 	  Collections.shuffle(estates);
 	  //creates guess object and stores murderer
 	  finalGuess = new Guess(characters.remove(0), weapons.remove(0), estates.remove(0));
   }
-  
+
   /**
    * Deals out the remainder of cards to all of the players
-   * 
+   *
    */
   public static void dealCards() {
 	  List<Card> allCards = new ArrayList<Card>();
@@ -540,11 +551,11 @@ public class Game{
 	  for (Player c : players) {
 		  hand = new ArrayList<Card>();
 		  for (int i = 0; i < hSize; i++) {
-			  hand.add(allCards.remove(i)); // adds card to player hand then removes it 
+			  hand.add(allCards.remove(i)); // adds card to player hand then removes it
 		  }
-		  c.addToHand(hand); // add current hand to hand collection in player class for storage 
+		  c.addToHand(hand); // add current hand to hand collection in player class for storage
 	  }
-	  while (!allCards.isEmpty()) { // while the remainder of cards are not empty divide them up amongst the players 
+	  while (!allCards.isEmpty()) { // while the remainder of cards are not empty divide them up amongst the players
 		  for (Player c : players) {
 
 			  for (int i = 0; i < 1; i++) {
@@ -556,10 +567,10 @@ public class Game{
 		  }
 	  }
   }
-  
+
   /**
    * gets estates from list
-   * 
+   *
    * @param name
    * name of estate
    * @return
@@ -568,16 +579,16 @@ public class Game{
 	public static Estate getEstate(String name) {
 		Estate result = new Estate("", new Weapon(""));
 		for(Estate estate : orderedEstates) {
-			if(estate.getName().equals(name)) { // if the estate names are equal get estate then return it 
+			if(estate.getName().equals(name)) { // if the estate names are equal get estate then return it
 				result = estate;
 			}
 		}
 		return result;
 	}
-	
+
 	/**
 	 * gets player from list
-	 * 
+	 *
 	 * @param name
 	 * name of player
 	 * @return
@@ -592,10 +603,10 @@ public class Game{
 		}
 		return result;
 	}
-  
+
   /**
    * Rolls dice for random number
-   * 
+   *
    * @return
    * value of dice roll
    */
@@ -604,20 +615,25 @@ public class Game{
 	  int diceB = 1 + (int) Math.random() * 7;
 	  return diceA + diceB;
   }
-  
+
+  /**
+   * Checks if player is in estate
+   * @param player
+   * current player
+   */hecks for game over
   public void inEstate(Player player) {
 		if(player.getEstate() != null) {
 			currentEstate = player.getEstate();
-			move = 0;	
+			move = 0;
 			player.setInEstate(true);
 		} else {
 			player.setInEstate(false);
 		}
   }
-  
+
   /**
    * Detects if valid key was pressed then calls method to move player
-   * 
+   *
    * @param player
    * current player
    */
@@ -625,13 +641,13 @@ public class Game{
 	  String input = sc.next();
 	  if(input.equals("a")) {
 		  if(count < getMove()) {
-				board.movePlayer(currentTurn, "left");	
+				board.movePlayer(currentTurn, "left");
 				board.drawBoard();
 				inEstate(player);
 			 	count++;
 			 }
 	  } else if (input.equals("s")) {
-			if(count < getMove()) { 
+			if(count < getMove()) {
 				board.movePlayer(currentTurn, "down");
 				board.drawBoard();
 				inEstate(player);
@@ -655,9 +671,9 @@ public class Game{
 		  System.out.println("Invalid Input");
 	  }
   }
-  
+
   /**
-   * 
+   *
    * @return
    * the amount of spaces player is allowed to move
    */
