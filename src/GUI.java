@@ -30,8 +30,10 @@ public class GUI extends JFrame implements ActionListener{
 	public JLabel showRoll;
 	public ArrayList<JFrame> nameFrames = new ArrayList<JFrame>();
 	public JLabel boardLabel = new JLabel("");
-	int count = 0;
-	String currentPlayer;
+
+	private int count = 0;
+	private String currentPlayer;
+	private boolean gameStarted = false;
 
 	/**
 	 * Setting up the initial menu screen frame
@@ -155,6 +157,7 @@ public class GUI extends JFrame implements ActionListener{
 	 * Setting up the main game Frame GUI
 	 */
 	public void gameBoard() {
+		gameStarted = true;
 		move = Game.diceRoll();
 		boardFrame = new JFrame("Board");
 		JButton hand = new JButton("Hand");
@@ -165,6 +168,7 @@ public class GUI extends JFrame implements ActionListener{
 		JButton downButton = new JButton("Down");
 		JButton leftButton = new JButton("Left");
 		JButton rightButton = new JButton("Right");
+		JButton makeGuess = new JButton("Guess");
 		resetGame.setBounds(10, 10, 150, 150);
 		hand.setBounds(10, 170, 150, 150);
 		roll.setBounds(10, 330, 150, 150);
@@ -173,6 +177,7 @@ public class GUI extends JFrame implements ActionListener{
 		downButton.setBounds(250, 595, 50, 50);
 		leftButton.setBounds(200, 570, 50, 50);
 		rightButton.setBounds(300, 570, 50, 50);
+		makeGuess.setBounds(625, 10, 150, 150);
 		hand.addActionListener(this);
 		resetGame.addActionListener(this);
 		roll.addActionListener(this);
@@ -181,6 +186,7 @@ public class GUI extends JFrame implements ActionListener{
 		downButton.addActionListener(this);
 		leftButton.addActionListener(this);
 		rightButton.addActionListener(this);
+		makeGuess.addActionListener(this);
 		boardFrame.add(resetGame);
 		boardFrame.add(hand);
 		boardFrame.add(roll);
@@ -189,6 +195,7 @@ public class GUI extends JFrame implements ActionListener{
 		boardFrame.add(downButton);
 		boardFrame.add(leftButton);
 		boardFrame.add(rightButton);
+		boardFrame.add(makeGuess);
 		currentPlayer = Game.players.get(Game.index).getName();
 		JLabel current = new JLabel("Current Player");
 		current.setBounds(175, 10, 500, 15);
@@ -233,7 +240,6 @@ public class GUI extends JFrame implements ActionListener{
 	 * Show which number was rolled
 	 */
 	public void showRoll() {
-		showHand.setText("");
 		showRoll = new JLabel("showRoll");
 		showRoll.setBounds(175, 50, 300, 15);
 		boardFrame.add(showRoll);
@@ -247,6 +253,13 @@ public class GUI extends JFrame implements ActionListener{
 		for(JFrame frame : nameFrames) {
 			frame.setVisible(false);
 		}
+	}
+
+	/**
+	 * Method to make a guess
+	 */
+	public void makeGuess() {
+
 	}
 
 	@Override
@@ -313,38 +326,41 @@ public class GUI extends JFrame implements ActionListener{
 			playerCount();
 		} else if (action.equals("Up")) {
 			if (count < move) {
-			Player currentPlayer = Game.players.get(Game.index);
-			Game.board.movePlayer(currentPlayer, "up");
-			Game.board.drawBoard();
-			updateBoard();
-			count++;
+				Player currentPlayer = Game.players.get(Game.index);
+				Game.board.movePlayer(currentPlayer, "up");
+				Game.board.drawBoard();
+				updateBoard();
+				count++;
 			}
 		} else if (action.equals("Down")) {
 			if (count < move) {
-			Player currentPlayer = Game.players.get(Game.index);
-			Game.board.movePlayer(currentPlayer, "down");
-			Game.board.drawBoard();
-			updateBoard();
-			count++;
+				Player currentPlayer = Game.players.get(Game.index);
+				Game.board.movePlayer(currentPlayer, "down");
+				Game.board.drawBoard();
+				updateBoard();
+				count++;
 			}
 		} else if (action.equals("Left")) {
 			if (count < move) {
-			Player currentPlayer = Game.players.get(Game.index);
-			Game.board.movePlayer(currentPlayer, "left");
-			Game.board.drawBoard();
-			updateBoard();
-			count++;
+				Player currentPlayer = Game.players.get(Game.index);
+				Game.board.movePlayer(currentPlayer, "left");
+				Game.board.drawBoard();
+				updateBoard();
+				count++;
 			}
 		} else if (action.equals("Right")) {
 			if (count < move) {
-			Player currentPlayer = Game.players.get(Game.index);
-			Game.board.movePlayer(currentPlayer, "right");
-			Game.board.drawBoard();
-			updateBoard();
-			count++;
+				Player currentPlayer = Game.players.get(Game.index);
+				Game.board.movePlayer(currentPlayer, "right");
+				Game.board.drawBoard();
+				updateBoard();
+				count++;
 			}
+		} else if (action.equals("Guess")) {
+			// to do
 		}
-		if (count == move) {
+		if (count == move && gameStarted) {
+			makeGuess();
 			Game.index = (Game.index + 1) % players.size(); // gets next player in list
 			count = 0;
 			move = Game.diceRoll();
