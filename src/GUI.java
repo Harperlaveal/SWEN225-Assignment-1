@@ -1,9 +1,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -26,6 +25,17 @@ public class GUI extends JFrame implements ActionListener{
 	public JLabel showHand;
 	public JLabel showRoll;
 	public ArrayList<JFrame> nameFrames = new ArrayList<JFrame>();
+	public ArrayList selectedRadio = new ArrayList() {};
+	public String nameRadio = "";
+	public int radioCount;
+	public JRadioButton optionOne = new JRadioButton("Lucilla");
+	public JRadioButton optionTwo = new JRadioButton("Bert");
+	public JRadioButton optionThree = new JRadioButton("Maline");
+	public JRadioButton optionFour = new JRadioButton("Percy");
+	public boolean selectedOne = true;
+	public boolean selectedTwo = true;
+	public boolean selectedThree = true;
+	public boolean selectedFour = true;
 
 	/**
 	 * Setting up the initial menu screen frame
@@ -83,10 +93,11 @@ public class GUI extends JFrame implements ActionListener{
 		nameTextField = new JTextField("");
 		nameTextField.setColumns(5);
 		JLabel label = new JLabel("Enter next player name and choose character:");
-		JRadioButton optionOne = new JRadioButton("Lucilla");
-		JRadioButton optionTwo = new JRadioButton("Bert");
-		JRadioButton optionThree = new JRadioButton("Maline");
-		JRadioButton optionFour = new JRadioButton("Percy");
+
+		optionOne.setEnabled(selectedOne);
+		optionTwo.setEnabled(selectedTwo);
+		optionThree.setEnabled(selectedThree);
+		optionFour.setEnabled(selectedFour);
 		optionOne.addActionListener(this);
 		optionTwo.addActionListener(this);
 		optionThree.addActionListener(this);
@@ -259,14 +270,38 @@ public class GUI extends JFrame implements ActionListener{
 			playerChoice = "Percy";
 
 		} else if (action.equals("Confirm player")) {
+
 			currentPlayerCount++;
 			String name = nameTextField.getText();
 			Player newPlayer = new Player(name);
 			newPlayer.character = playerChoice;
+
 			newPlayer.setName(name);
 			players.put(playerChoice, newPlayer);
 			if(currentPlayerCount < totalPlayerCount) {
+				//enterName();
+				nameRadio = newPlayer.character;
+				selectedRadio.add(nameRadio);
+
+				if(optionOne == selectedRadio.get(radioCount)){
+					selectedOne = false;
+
+				}
+				if(optionTwo == selectedRadio.get(radioCount)){
+					selectedTwo = false;
+
+				}
+				if(optionThree == selectedRadio.get(radioCount)){
+					selectedThree = false;
+
+				}
+				if(optionThree == selectedRadio.get(radioCount)){
+					selectedFour = false;
+
+				}
 				enterName();
+				radioCount++;
+				nameRadio = "";
 			}else {
 				for(Player player : players.values()) { // prints out for testing
 					System.out.println(player.getName());
