@@ -1,0 +1,83 @@
+class GUI {
+  
+  GUIState {
+    
+    StartSceen {
+      
+      NewGame {
+        [NewGameClicked()] start -> HowManyPlayers;
+      }
+    
+      QuitGame {
+        [QuitgameClicked()] quit -> exit;
+      }
+    }
+      
+    ChoosePlayers {
+      
+      HowManyPlayers {
+        [PlayersEntered()] names -> PlayerNames;
+      }
+      
+      PlayerNames {
+        [NamesEntered()] characters -> ChooseCharacters;
+      }
+      
+      ChooseCharacters {
+        [CharactersChosen()] begin -> InGame;
+      }
+    } 
+    
+    InGame {
+      
+      QuitGame {
+        [QuitgameClicked()] quit -> exit;
+      }
+      
+      ResetGame {
+        [ResetGameClicked()] reset -> ConfirmReset;
+      }
+      
+      ConfirmReset {
+        [ConfirmResetClicked()] confirm -> HowManyPlayers;
+      }
+      
+      RollDice {
+        [RollDiceClicked()] roll -> PlayerTurn;
+      }
+      
+      PlayerTurn {
+        
+        Move {
+          [GuessMoving()] finish -> Guess;
+          [EndMoving()] nextPlayer -> End;
+   
+        }
+        Guess {
+          [GuessMade()] nextPlayer -> End;
+          [CorrectGuess()] win -> Win;
+        }
+        
+        Hand {
+          [ShowHand()] show -> PlayerTurn;
+        }
+        
+        End {
+          [EndTurn()] turn -> InGame;
+          
+        }
+      }
+      Win{
+        [GameWon()] quit -> exit;
+      }
+    }
+  }
+}//$?[End_of_model]$?
+
+namespace -;
+
+
+class GUI
+{
+  position 50 30 109 45;
+}
