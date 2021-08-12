@@ -10,7 +10,7 @@ import javax.swing.*;
 public class GUI extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	public JFrame menuFrame, playerFrame, characterFrame;
+	public JFrame menuFrame, playerFrame;
 	public static JMenu menu;
 	public static JMenuBar bar;
 	public static JMenuItem start, exit;
@@ -55,25 +55,17 @@ public class GUI extends JFrame implements ActionListener{
 		playerFrame.setSize(400, 300);
 		JLabel label = new JLabel("Enter number of players:");
 		// radio buttons for choosing players
-		JRadioButton onePlayer = new JRadioButton("1");
-		JRadioButton twoPlayers = new JRadioButton("2");
 		JRadioButton threePlayers = new JRadioButton("3");
 		JRadioButton fourPlayers = new JRadioButton("4");
 		JButton playerCountConfirm = new JButton("Confirm players");
-		onePlayer.addActionListener(this);
-		twoPlayers.addActionListener(this);
 		threePlayers.addActionListener(this);
 		fourPlayers.addActionListener(this);
 		playerCountConfirm.addActionListener(this);
 		ButtonGroup playersGroup = new ButtonGroup(); // group to link radio buttons together
-		playersGroup.add(onePlayer);
-		playersGroup.add(twoPlayers);
 		playersGroup.add(threePlayers);
 		playersGroup.add(fourPlayers);
 		playerFrame.setLayout(new FlowLayout());
 		playerFrame.add(label);
-		playerFrame.add(onePlayer);
-		playerFrame.add(twoPlayers);
 		playerFrame.add(threePlayers);
 		playerFrame.add(fourPlayers);
 		playerFrame.add(playerCountConfirm);
@@ -243,12 +235,6 @@ public class GUI extends JFrame implements ActionListener{
 
 		} else if (action.equals("Exit Game")) {
 			exitDialog();
-
-		} else if (action.equals("1")) { // sets player count to which button is selected
-			totalPlayerCount = 1;
-
-		} else if (action.equals("2")) {
-			totalPlayerCount = 2;
 
 		} else if (action.equals("3")) {
 			totalPlayerCount = 3;
