@@ -29,6 +29,9 @@ public class GUI extends JFrame implements ActionListener{
 	public JLabel showHand;
 	public JLabel showRoll;
 	public ArrayList<JFrame> nameFrames = new ArrayList<JFrame>();
+	public JLabel boardLabel = new JLabel("");
+	int count = 0;
+	String currentPlayer;
 
 	/**
 	 * Setting up the initial menu screen frame
@@ -158,19 +161,35 @@ public class GUI extends JFrame implements ActionListener{
 		JButton resetGame = new JButton("Reset Game");
 		JButton roll = new JButton("Roll");
 		JButton quitGame = new JButton("Exit Game");
+		JButton upButton = new JButton("Up");
+		JButton downButton = new JButton("Down");
+		JButton leftButton = new JButton("Left");
+		JButton rightButton = new JButton("Right");
 		resetGame.setBounds(10, 10, 150, 150);
 		hand.setBounds(10, 170, 150, 150);
 		roll.setBounds(10, 330, 150, 150);
 		quitGame.setBounds(10, 490, 150, 150);
+		upButton.setBounds(250, 545, 50, 50);
+		downButton.setBounds(250, 595, 50, 50);
+		leftButton.setBounds(200, 570, 50, 50);
+		rightButton.setBounds(300, 570, 50, 50);
 		hand.addActionListener(this);
 		resetGame.addActionListener(this);
 		roll.addActionListener(this);
 		quitGame.addActionListener(this);
+		upButton.addActionListener(this);
+		downButton.addActionListener(this);
+		leftButton.addActionListener(this);
+		rightButton.addActionListener(this);
 		boardFrame.add(resetGame);
 		boardFrame.add(hand);
 		boardFrame.add(roll);
 		boardFrame.add(quitGame);
-		String currentPlayer = Game.players.get(Game.index).getName();
+		boardFrame.add(upButton);
+		boardFrame.add(downButton);
+		boardFrame.add(leftButton);
+		boardFrame.add(rightButton);
+		currentPlayer = Game.players.get(Game.index).getName();
 		JLabel current = new JLabel("Current Player");
 		current.setBounds(175, 10, 500, 15);
 		if(players.get(currentPlayer) == null) {
@@ -194,7 +213,7 @@ public class GUI extends JFrame implements ActionListener{
 		for(String string : board) {
 			boardString += string;
 		}
-		JLabel boardLabel = new JLabel(boardString);
+		boardLabel.setText(boardString);
 		boardLabel.setBounds(175, 70, 500, 500);
 		boardFrame.add(boardLabel);
 	}
@@ -292,6 +311,49 @@ public class GUI extends JFrame implements ActionListener{
 			players.clear();
 			boardFrame.setVisible(false);
 			playerCount();
+		} else if (action.equals("Up")) {
+			if (count < move) {
+			Player currentPlayer = Game.players.get(Game.index);
+			Game.board.movePlayer(currentPlayer, "up");
+			Game.board.drawBoard();
+			updateBoard();
+			count++;
+			}
+		} else if (action.equals("Down")) {
+			if (count < move) {
+			Player currentPlayer = Game.players.get(Game.index);
+			Game.board.movePlayer(currentPlayer, "down");
+			Game.board.drawBoard();
+			updateBoard();
+			count++;
+			}
+		} else if (action.equals("Left")) {
+			if (count < move) {
+			Player currentPlayer = Game.players.get(Game.index);
+			Game.board.movePlayer(currentPlayer, "left");
+			Game.board.drawBoard();
+			updateBoard();
+			count++;
+			}
+		} else if (action.equals("Right")) {
+			if (count < move) {
+			Player currentPlayer = Game.players.get(Game.index);
+			Game.board.movePlayer(currentPlayer, "right");
+			Game.board.drawBoard();
+			updateBoard();
+			count++;
+			}
+		}
+		if (count == move) {
+			Game.index = (Game.index + 1) % players.size(); // gets next player in list
+			count = 0;
+			move = Game.diceRoll();
+			showHand.setText("");
+			showRoll.setText("");
+			updateBoard();
+			boardFrame.setVisible(false);
+			boardFrame.dispose();
+			gameBoard();
 		}
 	}
 }
