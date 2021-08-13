@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +12,7 @@ import javax.swing.*;
 /**
  * GUI class which handles all of the frames and the transitions between them
  */
-public class GUI extends JFrame implements ActionListener{
+public class GUI extends JFrame implements ActionListener, KeyListener{
 
 	private static final long serialVersionUID = 1L;
 	public JFrame menuFrame, playerFrame;
@@ -34,6 +36,7 @@ public class GUI extends JFrame implements ActionListener{
 	private int count = 0;
 	private String currentPlayer;
 	private boolean gameStarted = false;
+	private boolean rollSeen = false;
 
 	/**
 	 * Setting up the initial menu screen frame
@@ -164,11 +167,16 @@ public class GUI extends JFrame implements ActionListener{
 		JButton resetGame = new JButton("Reset Game");
 		JButton roll = new JButton("Roll");
 		JButton quitGame = new JButton("Exit Game");
-		JButton upButton = new JButton("Up");
-		JButton downButton = new JButton("Down");
-		JButton leftButton = new JButton("Left");
-		JButton rightButton = new JButton("Right");
+		JButton upButton = new JButton("W");
+		JButton downButton = new JButton("S");
+		JButton leftButton = new JButton("A");
+		JButton rightButton = new JButton("D");
 		JButton makeGuess = new JButton("Guess");
+		ButtonGroup movementButtons = new ButtonGroup();
+		movementButtons.add(upButton);
+		movementButtons.add(leftButton);
+		movementButtons.add(rightButton);
+		movementButtons.add(downButton);
 		resetGame.setBounds(10, 10, 150, 150);
 		hand.setBounds(10, 170, 150, 150);
 		roll.setBounds(10, 330, 150, 150);
@@ -178,6 +186,11 @@ public class GUI extends JFrame implements ActionListener{
 		leftButton.setBounds(200, 570, 50, 50);
 		rightButton.setBounds(300, 570, 50, 50);
 		makeGuess.setBounds(625, 10, 150, 150);
+		roll.addKeyListener(this);
+		upButton.addKeyListener(this);
+		downButton.addKeyListener(this);
+		leftButton.addKeyListener(this);
+		rightButton.addKeyListener(this);
 		hand.addActionListener(this);
 		resetGame.addActionListener(this);
 		roll.addActionListener(this);
@@ -240,6 +253,7 @@ public class GUI extends JFrame implements ActionListener{
 	 * Show which number was rolled
 	 */
 	public void showRoll() {
+		rollSeen = true;
 		showRoll = new JLabel("showRoll");
 		showRoll.setBounds(175, 50, 300, 15);
 		boardFrame.add(showRoll);
@@ -254,52 +268,45 @@ public class GUI extends JFrame implements ActionListener{
 			frame.setVisible(false);
 		}
 	}
-
+		
 	/**
-	 * Method to make a guess
-	 */
-	public void makeGuess() {
-
-	}
-
-	/**
-	 * Actions performed
-	 * @param ActionEvent
+	 * Listens for button presses during the game 
+	 * 
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
-		if (action.equals("Start Game")) {
+		switch (action) {
+		case "Start Game":
 			menuFrame.setVisible(false);
 			set = false;
 			playerCount();
-
-		} else if (action.equals("Exit Game")) {
+			break;
+		case "Exit Game":
 			exitDialog();
-
-		} else if (action.equals("3")) {
+			break;
+		case "3":
 			totalPlayerCount = 3;
-
-		} else if (action.equals("4")) {
+			break;
+		case "4":
 			totalPlayerCount = 4;
-
-		} else if (action.equals("Confirm players")) { // confirms player count and moves on to name choice
-			System.out.println(totalPlayerCount);
+			break;
+		case "Confirm players":
 			enterName();
-
-		} else if (action.equals("Lucilla")) {
+			break;
+		case "Lucilla":
 			playerChoice = "Lucilla";
-
-		} else if (action.equals("Bert")) {
+			break;
+		case "Bert":
 			playerChoice = "Bert";
-
-		} else if (action.equals("Maline")) {
+			break;
+		case "Maline":
 			playerChoice = "Maline";
-
-		} else if (action.equals("Percy")) {
+			break;
+		case "Percy":
 			playerChoice = "Percy";
-
-		} else if (action.equals("Confirm player")) {
+			break;
+		case "Confirm player":
 			currentPlayerCount++;
 			String name = nameTextField.getText();
 			Player newPlayer = new Player(name);
@@ -309,62 +316,66 @@ public class GUI extends JFrame implements ActionListener{
 			if(currentPlayerCount < totalPlayerCount) {
 				enterName();
 			}else {
-				for(Player player : players.values()) { // prints out for testing
-					System.out.println(player.getName());
-					System.out.println(player.character);
-					System.out.println();
-				}
 				hideNameFrames();
 				gameBoard();
 			}
-		} else if (action.equals("Hand")) {
+			break;
+		case "Hand":
 			showHand();
-		} else if (action.equals("Roll")) {
+			break;
+		case "Roll":
 			showRoll();
-		} else if (action.equals("Reset Game")) {
+			break;
+		case "Reset Game":
 			totalPlayerCount = 0;
 			currentPlayerCount = 0;
 			nameFrames.clear();
 			players.clear();
 			boardFrame.setVisible(false);
 			playerCount();
-		} else if (action.equals("Up")) {
-			if (count < move) {
+			break;
+		case "W":
+			if ((count < move) && rollSeen) {
 				Player currentPlayer = Game.players.get(Game.index);
 				Game.board.movePlayer(currentPlayer, "up");
 				Game.board.drawBoard();
 				updateBoard();
 				count++;
 			}
-		} else if (action.equals("Down")) {
-			if (count < move) {
-				Player currentPlayer = Game.players.get(Game.index);
-				Game.board.movePlayer(currentPlayer, "down");
-				Game.board.drawBoard();
-				updateBoard();
-				count++;
-			}
-		} else if (action.equals("Left")) {
-			if (count < move) {
+			break;
+		case "A":
+			if ((count < move) && rollSeen) {
 				Player currentPlayer = Game.players.get(Game.index);
 				Game.board.movePlayer(currentPlayer, "left");
 				Game.board.drawBoard();
 				updateBoard();
 				count++;
 			}
-		} else if (action.equals("Right")) {
-			if (count < move) {
+			break;
+		case "D":
+			if ((count < move) && rollSeen) {
 				Player currentPlayer = Game.players.get(Game.index);
 				Game.board.movePlayer(currentPlayer, "right");
 				Game.board.drawBoard();
 				updateBoard();
 				count++;
 			}
-		} else if (action.equals("Guess")) {
+			break;
+		case "S":
+			if ((count < move) && rollSeen) {
+				Player currentPlayer = Game.players.get(Game.index);
+				Game.board.movePlayer(currentPlayer, "down");
+				Game.board.drawBoard();
+				updateBoard();
+				count++;
+			}
+			break;
+		case "Guess":
 			// to do
+			break;
 		}
 		if (count == move && gameStarted) {
-			makeGuess();
+			rollSeen = false;
 			Game.index = (Game.index + 1) % players.size(); // gets next player in list
 			count = 0;
 			move = Game.diceRoll();
@@ -376,4 +387,72 @@ public class GUI extends JFrame implements ActionListener{
 			gameBoard();
 		}
 	}
+	
+	/**
+	 * checks for key presses when moving player around 
+	 * 
+	 * 
+	 */
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int action = e.getKeyCode();
+		if (action == KeyEvent.VK_A) {
+			if ((count < move) && rollSeen) {
+				Player currentPlayer = Game.players.get(Game.index);
+				Game.board.movePlayer(currentPlayer, "left");
+				Game.board.drawBoard();
+				updateBoard();
+				count++;
+			}
+		} else if (action == KeyEvent.VK_S) {
+			if ((count < move) && rollSeen) {
+				Player currentPlayer = Game.players.get(Game.index);
+				Game.board.movePlayer(currentPlayer, "down");
+				Game.board.drawBoard();
+				updateBoard();
+				count++;
+			}
+		} else if (action == KeyEvent.VK_D) {
+			if ((count < move) && rollSeen) {
+				Player currentPlayer = Game.players.get(Game.index);
+				Game.board.movePlayer(currentPlayer, "right");
+				Game.board.drawBoard();
+				updateBoard();
+				count++;
+			}			
+		} else if (action == KeyEvent.VK_W) {
+			if ((count < move) && rollSeen) {
+				Player currentPlayer = Game.players.get(Game.index);
+				Game.board.movePlayer(currentPlayer, "up");
+				Game.board.drawBoard();
+				updateBoard();
+				count++;
+			}
+		}
+		if (count == move && gameStarted) {
+			rollSeen = false;
+			Game.index = (Game.index + 1) % players.size(); // gets next player in list
+			count = 0;
+			move = Game.diceRoll();
+			showHand.setText("");
+			showRoll.setText("");
+			updateBoard();
+			boardFrame.setVisible(false);
+			boardFrame.dispose();
+			gameBoard();
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

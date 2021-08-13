@@ -57,9 +57,9 @@ public class Game{
 	  dealCards();
 	  gui.menuScreen();
 	  begin();
-	  startGame();
+	  //startGame();
 	  board.drawBoard();
-	  start();
+	  //start();
   }
 
   /**
@@ -73,28 +73,32 @@ public class Game{
 		  }
 	  }
   }
-  /**
-   *
-   * starts the game asking for the amount of players
-   *
-   */
-  public void startGame() {
-	  System.out.println("Each player choose a character out of Lucilla, Bert, Maline and Percy");
-	  int num;
-	  Collections.shuffle(players); // shuffles the collection
-//	  do {
-//	  	System.out.println("How many players 1-4:");
-//	  	num = sc.nextInt();
-//	  } while (!isValid(num));
-  }
+//  /**
+//   *
+//   * starts the game asking for the amount of players
+//   *
+//   */
+//  public void startGame() {
+//	  System.out.println("Each player choose a character out of Lucilla, Bert, Maline and Percy");
+//	  int num;
+//	  Collections.shuffle(players); // shuffles the collection
+////	  do {
+////	  	System.out.println("How many players 1-4:");
+////	  	num = sc.nextInt();
+////	  } while (!isValid(num));
+//  }
 
   /**
    * Adds all players to a list
    *
    * @param player1
+   * first player
    * @param player2
+   * second player 
    * @param player3
+   * third player
    * @param player4
+   * fourth player
    */
   public void addPlayers(Player player1, Player player2, Player player3, Player player4) {
 	players.add(player1);
@@ -107,45 +111,45 @@ public class Game{
 	orderedPlayers.add(player4);
   }
 
-  /**
-   *
-   * Checks for valid number of players in game
-   *
-   * @param num
-   * number of players given from input
-   * @return
-   * True or false depending on if valid number is given
-   */
-  public boolean isValid(int num) {
-	  if (num > 4) {
-		  System.out.println("Too many players");
-		  return false;
-	  }
-	  else if (num < 1) {
-		  System.out.println("Too few players");
-		  return false;
-	  }
-	  return true;
-  }
+//  /**
+//   *
+//   * Checks for valid number of players in game
+//   *
+//   * @param num
+//   * number of players given from input
+//   * @return
+//   * True or false depending on if valid number is given
+//   */
+//  public boolean isValid(int num) {
+//	  if (num > 4) {
+//		  System.out.println("Too many players");
+//		  return false;
+//	  }
+//	  else if (num < 1) {
+//		  System.out.println("Too few players");
+//		  return false;
+//	  }
+//	  return true;
+//  }
 
-  /**
-   * Starts game by choosing a random player
-   *
-   */
-  public void start() {
-	  count = 0;
-	  System.out.println("\n");
-	  Player player = players.get(index); // gets player at start of list for first turn
-	  System.out.println("It is " + player.toString() + "'s turn");
-	  System.out.println("Type 'ready' to begin turn");
-	  String ready = sc.next(); // checks if player is ready
-	  if(ready.equals("ready")) {
-		  handOrDice(player);
-	  } else {
-		  System.out.println("Invalid Input");
-		  start();
-	  }
-  }
+//  /**
+//   * Starts game by choosing a random player
+//   *
+//   */
+//  public void start() {
+//	  count = 0;
+//	  System.out.println("\n");
+//	  Player player = players.get(index); // gets player at start of list for first turn
+//	  System.out.println("It is " + player.toString() + "'s turn");
+//	  System.out.println("Type 'ready' to begin turn");
+//	  String ready = sc.next(); // checks if player is ready
+//	  if(ready.equals("ready")) {
+//		  handOrDice(player);
+//	  } else {
+//		  System.out.println("Invalid Input");
+//		  start();
+//	  }
+//  }
 
   /**
    * Checks for game over
@@ -159,82 +163,82 @@ public class Game{
 	  }
   }
 
-  /**
-   * Choose between checking hand or dice
-   *
-   * @param player
-   * current player
-   */
-  public void handOrDice(Player player) {
-	  currentTurn = player;
-	  System.out.println("Type 'hand' to see cards in hand or 'dice' to roll the dice");
-	  String next = sc.next();
-	  if(next.equals("hand")) { // checks to see if player wants to check his hand or roll the dice
-		  System.out.println(player.toString() + "'s Hand" + player.getHand());
-		  handOrDice(player);
-	  } else if (next.equals("dice")) {
-		  move = diceRoll(); // rolls dice
-		  System.out.println("You rolled a " + move);
-		  while(count < getMove()) {
-			  System.out.println("\n");
-			  System.out.println("Press 'a' to move left press 's' to move down press 'd' to move right and press 'w' to move up, then press enter to submit it");
-			  keyPressed(player);
-		  }
-		  guessOrEnd(player);
-	  } else {
-		  System.out.println("Invalid Input");
-		  handOrDice(player);
-	  }
-  }
+//  /**
+//   * Choose between checking hand or dice
+//   *
+//   * @param player
+//   * current player
+//   */
+//  public void handOrDice(Player player) {
+//	  currentTurn = player;
+//	  System.out.println("Type 'hand' to see cards in hand or 'dice' to roll the dice");
+//	  String next = sc.next();
+//	  if(next.equals("hand")) { // checks to see if player wants to check his hand or roll the dice
+//		  System.out.println(player.toString() + "'s Hand" + player.getHand());
+//		  handOrDice(player);
+//	  } else if (next.equals("dice")) {
+//		  move = diceRoll(); // rolls dice
+//		  System.out.println("You rolled a " + move);
+//		  while(count < getMove()) {
+//			  System.out.println("\n");
+//			  System.out.println("Press 'a' to move left press 's' to move down press 'd' to move right and press 'w' to move up, then press enter to submit it");
+//			  keyPressed(player);
+//		  }
+//		  guessOrEnd(player);
+//	  } else {
+//		  System.out.println("Invalid Input");
+//		  handOrDice(player);
+//	  }
+//  }
 
-  /**
-   * Checks if player want to make a guess or end turn
-   *
-   *
-   * @param player
-   * current player
-   */
-  public void guessOrEnd(Player player) {
-	  System.out.println("\n");
-	  boolean valid = true;
-	  while(valid) { // makes sure player gives valid input
-		  if (player.inEstate()) { // checks to see if player is currently inside an estate
-			  System.out.println("Type 'guess' to make a guess using the estate you are in, 'solve' to make a final solve attempt or 'end' to end turn");
-			  String string = sc.next();
-			  if(string.equals("guess")) {
-				  makeGuess(player);
-				  valid = false; // acknowledges valid input
-			  }
-			  else if(string.equals("solve")) {
-				  makeFinalGuess(player);
-				  valid = false;
-			  }
-			  else if (string.equals("end")) {
-				  index = (index + 1) % players.size(); // gets next player in list
-				  start();
-				  valid = false;
-			  }
-			  else {
-				  System.out.println("Invalid Input");
-			  }
-		  } else { // if player is not in an estate
-			  System.out.println("Type 'solve' to make a final solve attempt or 'end' to end turn");
-			  String string = sc.next();
-			  if(string.equals("solve")) {
-				  makeFinalGuess(player);
-				  valid = false;
-			  }
-			  else if (string.equals("end")) {
-				  index = (index + 1) % players.size();
-				  start();
-				  valid = false;
-			  }
-			  else {
-				  System.out.println("Invalid Input");
-			  }
-		  }
-	  }
-  }
+//  /**
+//   * Checks if player want to make a guess or end turn
+//   *
+//   *
+//   * @param player
+//   * current player
+//   */
+//  public void guessOrEnd(Player player) {
+//	  System.out.println("\n");
+//	  boolean valid = true;
+//	  while(valid) { // makes sure player gives valid input
+//		  if (player.inEstate()) { // checks to see if player is currently inside an estate
+//			  System.out.println("Type 'guess' to make a guess using the estate you are in, 'solve' to make a final solve attempt or 'end' to end turn");
+//			  String string = sc.next();
+//			  if(string.equals("guess")) {
+//				  makeGuess(player);
+//				  valid = false; // acknowledges valid input
+//			  }
+//			  else if(string.equals("solve")) {
+//				  makeFinalGuess(player);
+//				  valid = false;
+//			  }
+//			  else if (string.equals("end")) {
+//				  index = (index + 1) % players.size(); // gets next player in list
+//				  start();
+//				  valid = false;
+//			  }
+//			  else {
+//				  System.out.println("Invalid Input");
+//			  }
+//		  } else { // if player is not in an estate
+//			  System.out.println("Type 'solve' to make a final solve attempt or 'end' to end turn");
+//			  String string = sc.next();
+//			  if(string.equals("solve")) {
+//				  makeFinalGuess(player);
+//				  valid = false;
+//			  }
+//			  else if (string.equals("end")) {
+//				  index = (index + 1) % players.size();
+//				  start();
+//				  valid = false;
+//			  }
+//			  else {
+//				  System.out.println("Invalid Input");
+//			  }
+//		  }
+//	  }
+//  }
 
   /**
    * Player makes a guess if they are in an estate
@@ -326,16 +330,16 @@ public class Game{
 				  String refute = sc.next();
 				  if(refute.equals("end")) { // end refution goes to next players turn
 					  index = (index + 1) % players.size();
-					  start();
+					  //start();
 					  next = false;
 					  done = false;
 				  } else if (refute.equals("next")) {
-					  cycle++; // keeps track of how many players we have been througj
+					  cycle++; // keeps track of how many players we have been through
 					  i++;
 					  if(cycle == orderedPlayers.size()-1) { // if we have asked all 3 players if they can refute end turn go to next player
 						  System.out.println("No one was able to refute the guess");
 						  index = (index + 1) % players.size();
-						  start();
+						  //start();
 						  next = false;
 						  done = false;
 					  }
@@ -439,7 +443,7 @@ public class Game{
 		  players.remove(player);
 		  gameOver();
 		  index = (index + 1) % players.size();
-		  start();
+		  //start();
 	  }
   }
 //------------------------
@@ -620,7 +624,7 @@ public class Game{
    * Checks if player is in estate
    * @param player
    * current player
-   */hecks for game over
+   */
   public void inEstate(Player player) {
 		if(player.getEstate() != null) {
 			currentEstate = player.getEstate();
@@ -631,46 +635,46 @@ public class Game{
 		}
   }
 
-  /**
-   * Detects if valid key was pressed then calls method to move player
-   *
-   * @param player
-   * current player
-   */
-  public void keyPressed(Player player) {
-	  String input = sc.next();
-	  if(input.equals("a")) {
-		  if(count < getMove()) {
-				board.movePlayer(currentTurn, "left");
-				board.drawBoard();
-				inEstate(player);
-			 	count++;
-			 }
-	  } else if (input.equals("s")) {
-			if(count < getMove()) {
-				board.movePlayer(currentTurn, "down");
-				board.drawBoard();
-				inEstate(player);
-			 	count++;
-			 }
-	  } else if (input.equals("d")) {
-			if(count < getMove()) {
-				board.movePlayer(currentTurn, "right");
-				board.drawBoard();
-				inEstate(player);
-			 	count++;
-			 }
-	  } else if (input.equals("w")) {
-		  if(count < getMove()) {
-				board.movePlayer(currentTurn, "up");
-				board.drawBoard();
-				inEstate(player);
-				count++;
-			}
-	  } else {
-		  System.out.println("Invalid Input");
-	  }
-  }
+//  /**
+//   * Detects if valid key was pressed then calls method to move player
+//   *
+//   * @param player
+//   * current player
+//   */
+//  public void keyPressed(Player player) {
+//	  String input = sc.next();
+//	  if(input.equals("a")) {
+//		  if(count < getMove()) {
+//				board.movePlayer(currentTurn, "left");
+//				board.drawBoard();
+//				inEstate(player);
+//			 	count++;
+//			 }
+//	  } else if (input.equals("s")) {
+//			if(count < getMove()) {
+//				board.movePlayer(currentTurn, "down");
+//				board.drawBoard();
+//				inEstate(player);
+//			 	count++;
+//			 }
+//	  } else if (input.equals("d")) {
+//			if(count < getMove()) {
+//				board.movePlayer(currentTurn, "right");
+//				board.drawBoard();
+//				inEstate(player);
+//			 	count++;
+//			 }
+//	  } else if (input.equals("w")) {
+//		  if(count < getMove()) {
+//				board.movePlayer(currentTurn, "up");
+//				board.drawBoard();
+//				inEstate(player);
+//				count++;
+//			}
+//	  } else {
+//		  System.out.println("Invalid Input");
+//	  }
+//  }
 
   /**
    *
@@ -680,7 +684,12 @@ public class Game{
   public int getMove() {
 	  return move;
   }
-
+  
+  /**
+   * Main function starts the game 
+   * 
+   * @param args
+   */
   public static void main(String[] args) {
 	  new Game();
   }
