@@ -15,6 +15,9 @@ public class Board{
   // CONSTRUCTOR
   //------------------------
   
+  /**
+   * Board constructor
+   */
   public Board(){
     for(int i = 0; i < 24; i++) {
       for(int j = 0; j < 24; j++) {
